@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-13T22:25:02.686Z",
+  "generatedAt": "2026-09-13T22:37:28.241Z",
   "assets": {
-    "styles.css": "/assets/built/styles.S33A2TK7.css",
+    "styles.css": "/assets/built/styles.ZSXH5R2S.css",
     "script.js": "/assets/built/script.KQFW7JJU.js"
   },
   "sourceMaps": {
-    "styles.css": "/assets/built/styles.S33A2TK7.css.map",
+    "styles.css": "/assets/built/styles.ZSXH5R2S.css.map",
     "script.js": "/assets/built/script.KQFW7JJU.js.map"
   },
   "serviceWorker": {
-    "version": "a45a8dc34f",
+    "version": "3d024c3aa0",
     "count": 24
   },
   "bytes": {
