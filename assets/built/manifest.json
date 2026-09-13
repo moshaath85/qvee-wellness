@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-09-13T21:49:34.203Z",
+  "assets": {
+    "styles.css": "/assets/built/styles.4G3CJRZ4.css",
+    "script.js": "/assets/built/script.IHLWYAWP.js"
+  },
+  "sourceMaps": {
+    "styles.css": "/assets/built/styles.4G3CJRZ4.css.map",
+    "script.js": "/assets/built/script.IHLWYAWP.js.map"
+  },
+  "serviceWorker": {
+    "version": "0de2e43bb3",
+    "count": 24
+  },
+  "bytes": {
+    "styles": 38645,
+    "script": 7634,
+    "stylesMap": 80100,
+    "scriptMap": 22921
+  }
+}

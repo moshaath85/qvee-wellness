@@ -1,0 +1,224 @@
+#!/usr/bin/env node
+/**
+ * QVee Wellness — production-like static server
+ * ---------------------------------------------
+ * Mirrors what a real CDN/host does, so DevTools > Network shows
+ * professional caching, compression and security headers.
+ *
+ *   npm start                 http://localhost:8913
+ *   node server.mjs --port 4000
+ */
+
+import http from 'node:http';
+import { existsSync, statSync } from 'node:fs';
+import { stat, readFile as readFileAsync } from 'node:fs/promises';
+import { extname, join, normalize, sep } from 'node:path';
+import { brotliCompressSync, gzipSync, constants } from 'node:zlib';
+import path from 'node:path';
+
+const ROOT = path.dirname(new URL(import.meta.url).pathname);
+const argPort = (() => {
+  const i = process.argv.indexOf('--port');
+  return i > -1 ? Number(process.argv[i + 1]) : Number(process.env.PORT || 8913);
+})();
+
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.mjs': 'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.map': 'application/json; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8',
+  '.webmanifest': 'application/manifest+json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.avif': 'image/avif',
+  '.gif': 'image/gif',
+  '.ico': 'image/x-icon',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.ttf': 'font/ttf',
+  '.otf': 'font/otf',
+  '.pdf': 'application/pdf',
+};
+
+const COMPRESSIBLE = /^(text\/|application\/(javascript|json|manifest\+json|xml))/;
+
+function cachePolicy(p) {
+  if (p.endsWith('.html')) return 'no-cache, must-revalidate';
+  if (p === '/sw.js') return 'no-cache, must-revalidate';
+  if (p === '/assets/built/manifest.json') return 'no-cache, must-revalidate';
+  if (p.startsWith('/assets/built/')) return 'public, max-age=31536000, immutable';
+  if (/\.(css|js|mjs|map)$/.test(p)) return 'public, max-age=604800';
+  if (/\.(png|jpe?g|webp|avif|gif|ico|svg|woff2?|ttf|otf)$/.test(p)) {
+    return 'public, max-age=2592000, stale-while-revalidate=604800';
+  }
+  if (/\.(xml|txt|webmanifest|json)$/.test(p)) return 'public, max-age=3600';
+  return 'public, max-age=3600';
+}
+
+function securityHeaders() {
+  return {
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'SAMEORIGIN',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+    'Content-Security-Policy': [
+      "default-src 'self'",
+      "img-src 'self' data: https://fonts.gstatic.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "script-src 'self' https://www.google.com https://maps.googleapis.com",
+      "frame-src https://www.google.com",
+      "connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'self'",
+    ].join('; '),
+  };
+}
+
+const compressCache = new Map();
+
+function bodyFor(buf, encoding, etag, type) {
+  if (!COMPRESSIBLE.test(type) || buf.length < 1024) return buf;
+  const key = etag + '|' + encoding;
+  if (compressCache.has(key)) return compressCache.get(key);
+  let out = buf;
+  if (encoding === 'br') {
+    out = brotliCompressSync(buf, {
+      params: { [constants.BROTLI_PARAM_QUALITY]: 11, [constants.BROTLI_PARAM_SIZE_HINT]: buf.length },
+    });
+  } else if (encoding === 'gzip') {
+    out = gzipSync(buf, { level: 9 });
+  }
+  compressCache.set(key, out);
+  if (compressCache.size > 200) compressCache.delete(compressCache.keys().next().value);
+  return out;
+}
+
+function pickEncoding(header = '') {
+  if (/\bbr\b/.test(header)) return 'br';
+  if (/\bgzip\b/.test(header)) return 'gzip';
+  return 'identity';
+}
+
+function resolveFile(urlPath) {
+  let p = decodeURIComponent(urlPath.split('?')[0]);
+  p = normalize(p).replace(/^(\.\.[/\\])+/, '');
+  if (p.includes('\0')) return null;
+
+  const candidates = [];
+  if (p === '/' || p === '') candidates.push('/index.html');
+  else {
+    candidates.push(p);
+    if (p.endsWith('/')) {
+      candidates.push(p + 'index.html');
+      candidates.push(p.slice(0, -1) + '.html');
+    } else if (!extname(p)) {
+      candidates.push(p + '.html');
+      candidates.push(join(p, 'index.html'));
+    }
+  }
+
+  for (const c of candidates) {
+    const abs = join(ROOT, c);
+    if (!abs.startsWith(ROOT + sep) && abs !== ROOT) continue;
+    if (!existsSync(abs)) continue;
+    if (!statSync(abs).isFile()) continue;
+    return { abs, url: c };
+  }
+  return null;
+}
+
+const server = http.createServer(async (req, res) => {
+  const started = process.hrtime.bigint();
+  const urlPath = req.url || '/';
+
+  try {
+    let found = resolveFile(urlPath);
+    if (found) {
+      const info = await stat(found.abs).catch(() => null);
+      if (!info || !info.isFile()) found = null;
+    }
+
+    const is404 = !found;
+    if (is404) {
+      const abs404 = join(ROOT, '404.html');
+      const info = await stat(abs404).catch(() => null);
+      if (info) found = { abs: abs404, url: '/404.html' };
+    }
+
+    if (!found) {
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Not found');
+      return;
+    }
+
+    const info = await stat(found.abs);
+    const rel = '/' + path.relative(ROOT, found.abs).split(sep).join('/');
+    const type = MIME[extname(found.abs).toLowerCase()] || 'application/octet-stream';
+    const etag = `W/"${info.size.toString(16)}-${Date.parse(info.mtimeMs ? new Date(info.mtimeMs) : new Date(info.mtime)).toString(16)}"`;
+    const lastModified = new Date(info.mtimeMs).toUTCString();
+
+    const headers = {
+      'Content-Type': type,
+      'Cache-Control': cachePolicy(rel),
+      ETag: etag,
+      'Last-Modified': lastModified,
+      'X-Powered-By': 'QVee Wellness static edge',
+      ...securityHeaders(),
+    };
+
+    if (req.headers['if-none-match'] === etag) {
+      res.writeHead(304, headers);
+      res.end();
+      log(req, 304, rel, info.size, '-', started);
+      return;
+    }
+
+    const buf = await readFileAsync(found.abs);
+    const encoding = pickEncoding(req.headers['accept-encoding']);
+    const body = bodyFor(buf, encoding, etag, type);
+
+    if (encoding !== 'identity' && body.length < buf.length) {
+      headers['Content-Encoding'] = encoding;
+      headers.Vary = 'Accept-Encoding';
+    }
+    headers['Content-Length'] = body.length;
+
+    res.writeHead(is404 ? 404 : 200, headers);
+    if (req.method === 'HEAD') res.end();
+    else res.end(body);
+
+    log(req, is404 ? 404 : 200, rel, body.length, headers['Content-Encoding'] || 'identity', started);
+  } catch (err) {
+    res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Internal error');
+    console.error(err);
+  }
+});
+
+function log(req, status, rel, size, enc, started) {
+  const ms = Number(process.hrtime.bigint() - started) / 1e6;
+  const color = status >= 500 ? 31 : status >= 400 ? 33 : status >= 300 ? 36 : 32;
+  const pad = (s, n) => String(s).padEnd(n);
+  const kb = (size / 1024).toFixed(1) + 'kb';
+  console.log(
+    `  ${pad(req.method, 4)} \x1b[${color}m${status}\x1b[0m  ${pad(rel, 42)} ${pad(kb, 9)} ${pad(enc, 8)} ${ms.toFixed(1)}ms`
+  );
+}
+
+server.listen(argPort, () => {
+  const cache = 'assets/built/* → immutable (1y) · html → no-cache';
+  console.log(`\n  \x1b[38;5;180mQVee Wellness\x1b[0m serving \x1b[4mhttp://localhost:${argPort}\x1b[0m`);
+  console.log(`  ${cache}`);
+  console.log(`  brotli + gzip · ETag · security headers\n`);
+});

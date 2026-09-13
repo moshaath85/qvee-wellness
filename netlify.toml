@@ -1,0 +1,33 @@
+# ---------------------------------------------------------------
+# QVee Wellness — Netlify deployment
+# Connect this GitHub repository to Netlify and it just works.
+# ---------------------------------------------------------------
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# Caching + security headers live in the `_headers` file (copied into dist/).
+# Clean URLs: /about  →  /about.html
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Production context: don't index Netlify preview URLs
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.branch-deploy]
+  command = "npm run build"

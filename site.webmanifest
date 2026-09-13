@@ -1,0 +1,26 @@
+{
+  "name": "QVee Wellness — Women's Luxury Wellness & Pilates",
+  "short_name": "QVee Wellness",
+  "description": "A women-only luxury Pilates and wellness sanctuary in Sobha Hartland, Dubai. Classes from AED 100.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#171210",
+  "theme_color": "#F4EFE9",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "assets/logo/qvee-logo-dark.png",
+      "sizes": "1000x733",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logo/qvee-logo-light.png",
+      "sizes": "1000x733",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
