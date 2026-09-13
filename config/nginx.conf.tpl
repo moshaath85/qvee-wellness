@@ -1,0 +1,82 @@
+# ---------------------------------------------------------------
+# QVee Wellness — Nginx server block (reference)
+# Deploy to /etc/nginx/conf.d/qveewellness.conf
+# ---------------------------------------------------------------
+
+# Brotli (if ngx_brotli is available, otherwise rely on gzip)
+brotli on;
+brotli_comp_level 6;
+brotli_types text/html text/css text/plain text/xml application/javascript application/json application/manifest+json image/svg+xml;
+
+# Gzip fallback
+gzip on;
+gzip_comp_level 6;
+gzip_vary on;
+gzip_min_length 1024;
+gzip_types text/html text/css text/plain text/xml application/javascript application/json application/manifest+json image/svg+xml;
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.qveewellness.com qveewellness.com;
+
+    root /var/www/qveewellness;
+    index index.html;
+
+    # ---------- Security headers ----------
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+    add_header Content-Security-Policy "__CSP__" always;
+
+    # ---------- Caching ----------
+    # Service worker must never be cached (exact match wins)
+    location = /sw.js {
+        add_header Cache-Control "no-cache, must-revalidate" always;
+        add_header Service-Worker-Allowed "/" always;
+    }
+
+    # Build manifest changes every deploy — never cache (exact match wins)
+    location = /assets/built/manifest.json {
+        add_header Cache-Control "no-cache, must-revalidate" always;
+    }
+
+    # Content-hashed bundles — immutable
+    location ^~ /assets/built/ {
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+        access_log off;
+    }
+
+    # Images & logos
+    location ^~ /assets/ {
+        add_header Cache-Control "public, max-age=2592000, stale-while-revalidate=604800" always;
+    }
+
+    # SEO files
+    location ~* \.(xml|txt|webmanifest)$ {
+        add_header Cache-Control "public, max-age=3600" always;
+    }
+
+    # HTML — always revalidate
+    location ~* \.html$ {
+        add_header Cache-Control "no-cache, must-revalidate" always;
+    }
+
+    # ---------- Clean URLs ----------
+    location / {
+        try_files $uri $uri.html $uri/ =404;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+
+    # Source maps are served like any other asset (useful for DevTools)
+    types {
+        application/json map;
+        application/manifest+json webmanifest;
+    }
+}

@@ -18,6 +18,7 @@ import { readFile, writeFile, readdir, rm, mkdir, stat, copyFile, cp } from 'nod
 import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { collectInlineHashes, buildCsp } from './csp.mjs';
 
 const ROOT = path.dirname(new URL(import.meta.url).pathname);
 const OUT = path.join(ROOT, 'assets', 'built');
@@ -27,15 +28,14 @@ const WATCH = process.argv.includes('--watch');
 const NOW = new Date().toISOString().slice(0, 10);
 
 /** Static files copied verbatim into the deploy output. */
-const DIST_ITEMS = [
-  'assets',
-  'robots.txt',
-  'sitemap.xml',
-  'site.webmanifest',
-  'sw.js',
-  '_headers',
-  '.htaccess',
-  'nginx.conf',
+const DIST_ITEMS = ['assets', 'robots.txt', 'sitemap.xml', 'site.webmanifest', 'sw.js'];
+
+/** Deployment configs generated from config/*.tpl with the current CSP. */
+const DEPLOY_CONFIGS = [
+  ['config/_headers.tpl', '_headers'],
+  ['config/vercel.json.tpl', 'vercel.json'],
+  ['config/nginx.conf.tpl', 'nginx.conf'],
+  ['config/htaccess.tpl', '.htaccess'],
 ];
 
 const ENTRIES = [
@@ -184,6 +184,17 @@ async function emitDist(pages) {
   }
 }
 
+/** Render config/*.tpl with the computed CSP into the root and dist/. */
+async function writeDeployConfigs(csp) {
+  for (const [tpl, out] of DEPLOY_CONFIGS) {
+    const src = path.join(ROOT, tpl);
+    if (!existsSync(src)) continue;
+    const rendered = (await readFile(src, 'utf8')).replace(/__CSP__/g, csp);
+    await writeFile(path.join(ROOT, out), rendered);
+    if (existsSync(DIST)) await writeFile(path.join(DIST, out), rendered);
+  }
+}
+
 async function writeManifest(assets, sizes, extra) {
   const manifest = {
     generatedAt: new Date().toISOString(),
@@ -219,10 +230,15 @@ async function run() {
   await writeManifest(assets, sizes, { sw });
   await emitDist(pages);
 
+  const hashes = await collectInlineHashes(pages.map((p) => path.join(ROOT, p)));
+  await writeDeployConfigs(buildCsp(hashes));
+
   log(`styles.css  → ${path.basename(assets.styles || '')}  (${kb(sizes.styles || 0)} + map)`);
   log(`script.js   → ${path.basename(assets.script || '')}  (${kb(sizes.script || 0)} + map)`);
   log(`HTML        → ${pages.length} pages, ${changed} rewritten`);
   if (sw) log(`sw.js       → v${sw.version}, ${sw.count} precached URLs`);
+  log(`CSP         → ${hashes.length} inline script hashes (JSON-LD)`);
+  log(`configs     → _headers, vercel.json, nginx.conf, .htaccess`);
   log(`manifest    → assets/built/manifest.json`);
   log(`deploy      → dist/ (${pages.length} pages + assets)`);
 }
