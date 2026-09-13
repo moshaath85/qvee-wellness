@@ -85,12 +85,12 @@
       lightboxImg.src = src;
       lightboxImg.alt = alt || '';
       lightbox.classList.add('is-open');
-      lightbox.setAttribute('aria-hidden', 'false');
+      lightbox.removeAttribute('inert');
       document.body.classList.add('lightbox-open');
     };
     const close = () => {
       lightbox.classList.remove('is-open');
-      lightbox.setAttribute('aria-hidden', 'true');
+      lightbox.setAttribute('inert', '');
       document.body.classList.remove('lightbox-open');
     };
     $$('.gallery__item').forEach((item) => {
@@ -226,7 +226,8 @@
   const setMenu = (open) => {
     document.body.classList.toggle('menu-open', open);
     menu.classList.toggle('is-open', open);
-    menu.setAttribute('aria-hidden', String(!open));
+    if (open) menu.removeAttribute('inert');
+    else menu.setAttribute('inert', '');
     toggle.setAttribute('aria-expanded', String(open));
     const links = $$('.menu__nav a', menu);
     links.forEach((a, i) => { a.style.transitionDelay = (open ? 0.18 + i * 0.06 : 0) + 's'; });
