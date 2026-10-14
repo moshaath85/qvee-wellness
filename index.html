@@ -36,7 +36,7 @@
 <link rel="icon" href="assets/logo/qvee-logo-dark.png">
 <link rel="apple-touch-icon" href="assets/logo/qvee-logo-dark.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="stylesheet" href="assets/built/styles.7N6YW2RV.css">
+<link rel="stylesheet" href="assets/built/styles.FVHBLIYS.css">
 
 <script type="application/ld+json">
 {
@@ -122,26 +122,28 @@
   </a>
 
   <nav class="nav" aria-label="Primary">
-    <a href="about.html" data-nav>About</a>
-    <a href="practices.html" data-nav>Practices</a>
-    <a href="membership.html" data-nav>Packages &amp; Memberships</a>
-    <a href="visit.html" data-nav>Visit</a>
+    <a href="/" data-nav>Home</a>
+    <a href="practices.html" data-nav>Classes</a>
+    <a href="membership.html" data-nav>Packages</a>
+    <a href="about.html" data-nav>Our Story</a>
+    <a href="visit.html" data-nav>Visit Us</a>
   </nav>
 
   <div class="header__actions">
-    <a href="membership.html#booking" class="btn btn--outline btn--sm header__cta" data-cursor="hover"><span>Book a Class</span></a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    <a href="membership.html#plans" class="btn btn--outline btn--sm header__cta" data-cursor="hover"><span>Find Your Plan</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-controls="menu" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
   </div>
 </header>
+<nav class="mobile-nav" aria-label="Quick navigation"><a href="/">Home</a><a href="practices.html">Classes</a><a href="membership.html">Packages</a><a href="visit.html">Visit</a></nav>
 
 <!-- Mobile menu -->
 <div class="menu" id="menu" inert>
   <div class="menu__bg"></div>
   <nav class="menu__nav" aria-label="Mobile">
     <a href="/"><em>01</em>Home</a>
-    <a href="about.html"><em>02</em>About</a>
-    <a href="practices.html"><em>03</em>Practices</a>
-    <a href="membership.html"><em>04</em>Packages &amp; Memberships</a>
+    <a href="practices.html"><em>02</em>Classes</a>
+    <a href="membership.html"><em>03</em>Packages &amp; Memberships</a>
+    <a href="about.html"><em>04</em>Our Story</a>
     <a href="visit.html"><em>05</em>Visit &amp; Contact</a>
   </nav>
   <div class="menu__foot">
@@ -152,15 +154,14 @@
 </div>
 
 <main id="main">
-
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero__media">
     <div class="hero__slides" id="heroSlides">
-      <div class="hero__slide is-active"><img src="assets/img/hero.jpg" alt="The QVee Wellness Pilates studio bathed in warm daylight in Sobha Hartland, Dubai" width="2200" height="1200"></div>
-      <div class="hero__slide"><img src="assets/img/studio.jpg" alt="The main QVee Wellness studio in Sobha Hartland, Dubai" loading="eager" width="1800" height="981"></div>
-      <div class="hero__slide"><img src="assets/img/reformer.jpg" alt="Reformer Pilates studio with premium commercial reformers" loading="eager" width="1400" height="1713"></div>
-      <div class="hero__slide"><img src="assets/img/yoga.jpg" alt="Yoga studio with a sculpted feature wall" loading="eager" width="1400" height="1512"></div>
+      <div class="hero__slide is-active"><img src="assets/img/hero.jpg" fetchpriority="high" alt="The QVee Wellness Pilates studio bathed in warm daylight in Sobha Hartland, Dubai" width="2200" height="1200"></div>
+      <div class="hero__slide"><img src="assets/img/studio.jpg" alt="The main QVee Wellness studio in Sobha Hartland, Dubai" loading="lazy" width="1800" height="981"></div>
+      <div class="hero__slide"><img src="assets/img/reformer.jpg" alt="Reformer Pilates studio with premium commercial reformers" loading="lazy" width="1400" height="1713"></div>
+      <div class="hero__slide"><img src="assets/img/yoga.jpg" alt="Yoga studio with a sculpted feature wall" loading="lazy" width="1400" height="1512"></div>
     </div>
     <div class="hero__scrim"></div>
     <div class="hero__bars" id="heroBars" role="group" aria-label="Studio slideshow">
@@ -172,13 +173,11 @@
   </div>
 
   <div class="hero__content">
-    <p class="eyebrow eyebrow--light" data-hero="1">Women's Luxury Wellness &amp; Pilates · Dubai</p>
-    <img class="hero__logo" src="assets/logo/qvee-logo-light.png" alt="QVee Wellness" data-hero="2" width="1000" height="733">
-    <h1 class="hero__tagline" data-hero="3">Where strength is nurtured with grace</h1>
-    <p class="hero__sub" data-hero="4">A women-only sanctuary in the heart of Sobha Hartland, Dubai —<br class="hide-sm"> movement, mindfulness, recovery and belonging under one roof.</p>
-    <div class="hero__cta" data-hero="5">
-      <a href="membership.html" class="btn btn--solid btn--light" data-cursor="hover"><span>Book a Class</span></a>
-    </div>
+    <p class="eyebrow eyebrow--light" data-hero="1">Women-only Pilates &amp; Wellness · Sobha Hartland, Dubai</p>
+
+    <h1 class="hero__tagline" data-hero="1">Pilates for strength.<br><em>Space for you.</em></h1>
+    <p class="hero__sub" data-hero="2">Small-group Reformer Pilates, yoga and personalised training.<br class="hide-sm"> A women-only studio in Sobha Hartland, made for your pace.</p>
+    <div class="hero__cta" data-hero="3"><a href="membership.html?plan=three#packages" class="btn btn--solid btn--light"><span>Explore 3 Visits · AED 292</span></a><a href="practices.html" class="btn btn--ghost"><span>Find Your Class</span></a></div><p class="hero__booking-note">Explore plans now · Online booking coming soon</p>
   </div>
 
   <div class="hero__foot">
@@ -187,22 +186,32 @@
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <span>Reformer Pilates <i>·</i></span><span>Aerial Yoga <i>·</i></span><span>Breathwork <i>·</i></span><span>Mat Pilates <i>·</i></span><span>Meditation <i>·</i></span><span>Recovery <i>·</i></span><span>Balance <i>·</i></span>
-    <span>Reformer Pilates <i>·</i></span><span>Aerial Yoga <i>·</i></span><span>Breathwork <i>·</i></span><span>Mat Pilates <i>·</i></span><span>Meditation <i>·</i></span><span>Recovery <i>·</i></span><span>Balance <i>·</i></span>
-  </div>
-</div>
+<section class="first-step"><div class="wrap first-step__inner"><div><p class="eyebrow">Not sure where to start?</p><h2>Explore your first <em>three visits.</em></h2><p>Discover a practice that feels right for you.</p></div><div class="first-step__price"><span>3 VISITS</span><strong>AED 292</strong><small>Approx. AED 97.33 per visit</small></div><a href="membership.html?plan=three#packages" class="btn btn--solid"><span>Explore This Package</span></a></div></section><!-- PRACTICES -->
+<section class="practices section" id="practices">
+  <div class="wrap">
+    <header class="section-head">
+      <p class="eyebrow reveal">Find your class</p>
+      <h2 class="display reveal">How would you like to <em>move?</em></h2>
+      <p class="section-head__note reveal">Build strength on the Reformer, slow down with yoga, or choose focused personal training. Explore the practice that fits your goals.</p>
+    </header>
 
-<!-- INTRO / ABOUT -->
+<div class="practices__grid">
+<a class="card" href="practices.html#reformer"><div class="card__media"><img src="assets/img/reformer.jpg" alt="QVee Reformer Pilates studio" width="1400" height="1713" loading="lazy"></div><div class="card__meta"><span class="card__idx">01</span><span class="card__tag">Strength &amp; control</span></div><h3 class="card__title">Reformer Pilates</h3><p class="card__text">Small guided groups on nine premium reformers. Build strength and body awareness, with guidance at your level.</p><span class="card__route">Explore Reformer &rarr;</span></a>
+<a class="card" href="practices.html#mat-yoga"><div class="card__media"><img src="assets/img/yoga.jpg" alt="Yoga and mat practice space at QVee" width="1400" height="1512" loading="lazy"></div><div class="card__meta"><span class="card__idx">02</span><span class="card__tag">Balance &amp; breath</span></div><h3 class="card__title">Yoga &amp; Mat Practice</h3><p class="card__text">Grounding yoga and mindful mat movement. Make space for flexibility, balance and a calmer moment in your day.</p><span class="card__route">Explore Yoga &amp; Mat &rarr;</span></a>
+<a class="card" href="practices.html#private"><div class="card__media"><img src="assets/img/private.jpg" alt="Private Pilates training space" width="1600" height="872" loading="lazy"></div><div class="card__meta"><span class="card__idx">03</span><span class="card__tag">Personal attention</span></div><h3 class="card__title">Private &amp; Semi-Private</h3><p class="card__text">Focused coaching built around you. Train one-to-one, or share the experience in a small, closely guided group.</p><span class="card__route">Explore Personal Training &rarr;</span></a>
+</div><p class="section-next"><a class="link-arrow" href="practices.html">View all classes, including Aerial Yoga <i></i></a></p>
+
+  </div>
+</section>
+
+<section class="section section--sand" id="membership"><div class="wrap"><header class="section-head section-head--center"><p class="eyebrow">Choose what fits your life</p><h2 class="display">A few visits, or<br><em>a regular ritual.</em></h2><p class="section-head__note">Class packages for your own pace. Monthly memberships for a more consistent practice.</p></header><div class="home-plans"><a class="home-plan" href="membership.html?plan=three#packages"><span class="eyebrow">Class packages</span><h3>Start with<br><em>three visits.</em></h3><div class="plan__amount"><span>AED</span> 292</div><p>3 visits · approx. AED 97.33 per visit</p><p>Also available: a solo session for AED 195, 5 visits for AED 825, or 10 visits for AED 1,500.</p><span class="link-arrow">Compare class packages <i></i></span></a><a class="home-plan home-plan--dark" href="membership.html#monthly"><span class="eyebrow">Monthly memberships</span><h3>Make space<br><em>every month.</em></h3><div class="plan__amount"><span>FROM AED</span> 680</div><p>4 visits within 30 days · AED 170 per visit</p><p>Choose 4, 8, 12 or 20 visits. Every monthly membership can be frozen for up to 60 days.</p><span class="link-arrow">Choose your monthly plan <i></i></span></a></div><div class="member-extra"><div><span class="eyebrow">More with 12 &amp; 20 visits</span><p>A Guest Pass, plus access to Yoga, Mat Yoga &amp; Mat Pilates.</p></div><a href="membership.html?plan=month-twelve#monthly" class="link-arrow">See included benefits <i></i></a></div></div></section><section class="section why-compact"><div class="wrap"><p class="eyebrow">Why QVee</p><h2 class="display">The details that make<br><em>the difference.</em></h2><div class="perk-grid"><div><span>01 / YOUR SPACE</span><h3>Exclusively for women</h3><p>A private environment where you can focus on your own practice.</p></div><div><span>02 / YOUR GUIDANCE</span><h3>Small groups. Close attention.</h3><p>Guided movement, clear cueing and room to progress at your level.</p></div><div><span>03 / YOUR RHYTHM</span><h3>Flexible ways to practise</h3><p>Class packages and 30-day memberships with an option to pause.</p></div></div></div></section><!-- INTRO / ABOUT -->
 <section class="intro section" id="about">
   <div class="wrap intro__grid">
     <div class="intro__copy">
       <p class="eyebrow reveal">About Us</p>
-      <h2 class="display reveal">A new standard for women's <em>wellness</em></h2>
-      <p class="lead reveal">QVee Wellness is a luxury women-only wellness destination located in the heart of Sobha Hartland, Dubai. Designed to redefine modern wellness, it blends movement, mindfulness, recovery and community within an elegant, hospitality-inspired environment.</p>
-      <p class="body reveal">Our studio offers premium Pilates, yoga, wellness programmes and transformative experiences — designed to support women in achieving physical strength, mental clarity and overall wellbeing.</p>
+      <h2 class="display reveal">A place that feels <em>like yours.</em></h2>
+      <p class="lead">A women-only Pilates and wellness studio in Sobha Hartland. Thoughtfully designed spaces, small guided groups and room to move at your own pace.</p>
+      <p class="body">From your first visit to a regular practice, our team is here to help you find a class and a rhythm that suit you.</p>
       <div class="intro__stats reveal">
         <div class="stat">
           <span class="stat__num" data-count="100" data-suffix="%">100%</span>
@@ -226,144 +235,18 @@
   </div>
 </section>
 
-<!-- FOUNDER -->
-<section class="founder section section--dark" id="founder">
-  <div class="founder__media" data-parallax="0.08">
-    <img src="assets/img/studio.jpg" alt="Interior of the QVee Wellness studio" loading="lazy" width="1800" height="981">
-  </div>
-  <div class="wrap founder__inner">
-    <h2 class="eyebrow eyebrow--light reveal">Founder's Message</h2>
-    <blockquote class="founder__quote reveal">
-      "QVee Wellness was born from a simple belief — that women deserve a space designed entirely for them, where strength is nurtured with grace and wellbeing is treated as a way of life."
-    </blockquote>
-    <p class="founder__body reveal">We created a sanctuary that honours the modern woman — her ambition, her balance, and her need for a place that feels both elevated and deeply personal. This is more than a studio; it is a home for transformation.</p>
-    <div class="founder__sign reveal">
-      <span class="founder__name">Qamar Ibrahim</span>
-      <span class="founder__role">Founder &amp; Managing Director</span>
-    </div>
-  </div>
-</section>
-
-<!-- PRACTICES -->
-<section class="practices section" id="practices">
-  <div class="wrap">
-    <header class="section-head">
-      <p class="eyebrow reveal">Services &amp; Programmes</p>
-      <h2 class="display reveal">A complete spectrum of <em>wellness</em></h2>
-      <p class="section-head__note reveal">From precise reformer work to suspended, weightless movement — every practice curated and guided with intention.</p>
-    </header>
-
-    <div class="practices__grid">
-      <a class="card reveal" href="practices.html#reformer" data-cursor="view">
-        <div class="card__media"><img src="assets/img/reformer.jpg" alt="Reformer Pilates studio in Dubai" loading="lazy" width="1400" height="1713"></div>
-        <div class="card__meta"><span class="card__idx">01</span><span class="card__tag">Signature Practice</span></div>
-        <h3 class="card__title">Reformer Pilates</h3>
-        <p class="card__text">Nine premium commercial reformers, small guided groups, and low-impact training that builds long, strong, balanced bodies.</p>
-      </a>
-
-      <a class="card reveal" href="practices.html#private" data-cursor="view">
-        <div class="card__media"><img src="assets/img/private.jpg" alt="Private Pilates training room" loading="lazy" width="1600" height="872"></div>
-        <div class="card__meta"><span class="card__idx">02</span><span class="card__tag">One-to-One</span></div>
-        <h3 class="card__title">Private Pilates</h3>
-        <p class="card__text">A dedicated private room for fully personalised training — shaped around your goals, your body and your pace, in complete comfort.</p>
-      </a>
-
-      <a class="card reveal" href="practices.html#semi-private" data-cursor="view">
-        <div class="card__media"><img src="assets/img/semiprivate.jpg" alt="Semi-private Pilates session" loading="lazy" width="1600" height="872"></div>
-        <div class="card__meta"><span class="card__idx">03</span><span class="card__tag">Small Group</span></div>
-        <h3 class="card__title">Semi-Private Pilates</h3>
-        <p class="card__text">The intimacy of private coaching shared with a select few — two to four guests, close guidance and a warm, motivating atmosphere.</p>
-      </a>
-
-      <a class="card reveal" href="practices.html#mat-pilates" data-cursor="view">
-        <div class="card__media"><img src="assets/img/mat.jpg" alt="Mat Pilates studio" loading="lazy" width="1600" height="872"></div>
-        <div class="card__meta"><span class="card__idx">04</span><span class="card__tag">Foundations</span></div>
-        <h3 class="card__title">Mat Pilates</h3>
-        <p class="card__text">Classical Pilates on the mat — controlled, mindful movement developing deep core strength, posture and body awareness.</p>
-      </a>
-
-      <a class="card reveal" href="practices.html#aerial-yoga" data-cursor="view">
-        <div class="card__media"><img src="assets/img/aerial.jpg" alt="Aerial yoga with silk hammocks" loading="lazy" width="1400" height="1526"></div>
-        <div class="card__meta"><span class="card__idx">05</span><span class="card__tag">Suspended Practice</span></div>
-        <h3 class="card__title">Aerial Yoga</h3>
-        <p class="card__text">Soft silk hammocks support the body through fluid, weightless movement — decompressing the spine and inviting playful release.</p>
-      </a>
-
-      <a class="card reveal" href="practices.html#mat-yoga" data-cursor="view">
-        <div class="card__media"><img src="assets/img/yoga.jpg" alt="Mat yoga studio" loading="lazy" width="1400" height="1512"></div>
-        <div class="card__meta"><span class="card__idx">06</span><span class="card__tag">Grounded Practice</span></div>
-        <h3 class="card__title">Mat Yoga</h3>
-        <p class="card__text">A grounding flow uniting breath and movement beneath soft, ambient light — restoring flexibility and calming the mind.</p>
-      </a>
-    </div>
-
-    <div class="practices__list reveal">
-      <span>Breathwork</span><span>Meditation</span><span>Mindfulness Programmes</span>
-      <span>Stretch &amp; Mobility</span><span>Wellness Workshops</span><span>Corporate &amp; Events</span>
-    </div>
-  </div>
-</section>
-
-<!-- STUDIO / FACILITY -->
-<section class="studio section section--dark" id="studio">
-  <div class="studio__bg" data-parallax="0.12">
-    <img src="assets/img/studio.jpg" alt="QVee Wellness studio interiors in Sobha Hartland" loading="lazy" width="1800" height="981">
-  </div>
-  <div class="wrap studio__grid">
-    <div class="studio__copy">
-      <p class="eyebrow eyebrow--light reveal">Studio Experience</p>
-      <h2 class="display display--light reveal">Every visit, an <em>occasion</em></h2>
-      <p class="body body--light reveal">From the moment of arrival, guests are welcomed into a calm, considered space. Soft daylight, natural textures and attentive service create an atmosphere closer to a private retreat than a studio.</p>
-      <p class="body body--light reveal">A curated journey of movement, recovery and quiet luxury — designed to feel exceptional from the first breath to the last.</p>
-      <p class="reveal" style="margin-top:2.2rem"></p>
-    </div>
-
-    <div class="studio__facility reveal">
-      <p class="eyebrow eyebrow--light">Thoughtfully considered</p>
-      <p class="studio__area">Space to <em>reconnect.</em></p><ul class="studio__rooms"><li><span>Small guided Reformer groups</span></li><li><span>Yoga &amp; mindful movement</span></li><li><span>Private &amp; semi-private training</span></li><li><span>A calm reception &amp; lounge</span></li></ul>
-      <p class="studio__finish">Warm oak · Natural stone · Soft linen</p>
-    </div>
-  </div>
-</section>
-
-<!-- WHY QVEE -->
-<section class="why section" id="why">
-  <div class="wrap">
-    <header class="section-head section-head--center">
-      <p class="eyebrow reveal">Why QVee</p>
-      <h2 class="display reveal">A wellness destination <em>unlike any other</em></h2>
-    </header>
-    <div class="why__grid">
-      <div class="why__item reveal"><span class="why__idx">01</span><h3>Exclusively for Women</h3><p>A private, comfortable environment designed entirely around women.</p></div>
-      <div class="why__item reveal"><span class="why__idx">02</span><h3>Considered Luxury</h3><p>Hospitality-grade design, materials and service in every detail.</p></div>
-      <div class="why__item reveal"><span class="why__idx">03</span><h3>Complete Wellness</h3><p>Movement, mindfulness, recovery and community under one roof.</p></div>
-      <div class="why__item reveal"><span class="why__idx">04</span><h3>Expert Guidance</h3><p>Highly qualified instructors and genuinely personalised attention.</p></div>
-      <div class="why__item reveal"><span class="why__idx">05</span><h3>Prime Location</h3><p>At the heart of Sobha Hartland, one of Dubai's finest communities.</p></div>
-      <div class="why__item reveal"><span class="why__idx">06</span><h3>Genuine Community</h3><p>A supportive sisterhood that extends well beyond the studio.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- MEMBERSHIP & PRICING -->
-<section class="section section--sand" id="membership"><div class="wrap"><header class="section-head section-head--center"><p class="eyebrow">Find your rhythm</p><h2 class="display">Your practice.<br><em>Your way.</em></h2><p class="section-head__note">A first visit or a monthly ritual. Make room for movement.</p></header><div class="home-plans"><a class="home-plan" href="membership.html#packages"><span class="eyebrow">Class packages</span><h3>Begin with<br><em>possibility.</em></h3><p>Solo session</p><div class="plan__amount"><span>AED</span> 195</div><p>Also available: 3, 5 and 10 visits.</p><span class="link-arrow">Explore packages <i></i></span></a><a class="home-plan home-plan--dark" href="membership.html#monthly"><span class="eyebrow">Monthly memberships</span><h3>Make it<br><em>a ritual.</em></h3><p>4 visits in 30 days</p><div class="plan__amount"><span>AED</span> 680</div><p>4, 8, 12 or 20 visits. Freeze for up to 60 days.</p><span class="link-arrow">Explore memberships <i></i></span></a></div><p class="plans-note">Guest Pass + Yoga, Mat Yoga &amp; Mat Pilates access with the 12- and 20-visit memberships.</p></div></section>
-<section class="section membership-story"><div class="wrap membership-story__grid"><figure><img src="assets/img/mat.jpg" alt="Calm mat Pilates space at QVee Wellness" loading="lazy" width="1600" height="872"></figure><div class="membership-story__card"><p class="eyebrow">Movement meets mindfulness</p><h2 class="display">Find your<br><em>kind of balance.</em></h2><p class="body">From the precision of Reformer Pilates to the grounding flow of yoga. Explore a practice that feels like you.</p><a class="link-arrow" href="practices.html">Discover our practices <i></i></a></div></div></section>
 <!-- LOCATION -->
 <section class="location section section--sand" id="location">
   <div class="wrap location__grid">
     <div class="location__copy">
       <p class="eyebrow reveal">Visit Us</p>
-      <h2 class="display reveal">Why <em>Sobha Hartland</em></h2>
-      <p class="body reveal">Set within Mohammed Bin Rashid City, Sobha Hartland is one of Dubai's most distinguished waterfront communities — green, refined, and home to discerning residents who value quality of life.</p>
-      <ul class="location__list reveal">
-        <li>Serves Sobha Hartland residents and surrounding communities</li>
-        <li>Promotes healthy lifestyle and community wellbeing</li>
-        <li>A calm setting for movement, breath and balance</li>
-        <li>Premium destination aligned with Sobha Hartland's luxury standards</li>
-      </ul>
+      <h2 class="display reveal">Your studio in <em>Sobha Hartland.</em></h2>
+      <p class="body">Find us at Retail A01, One Park Avenue Building. Explore arrival details, parking and what to bring before your first visit.</p>
+      <ul class="location__list"><li>Women-only Pilates &amp; wellness</li><li>Parking available within One Park Avenue</li><li>Arrive 15 minutes before your session</li></ul>
       <address class="location__address reveal">
         Retail A01, One Park Avenue Building,<br>Sobha Hartland, Dubai, UAE
       </address>
-      <a class="link-arrow reveal" href="https://www.google.com/maps/search/?api=1&amp;query=One+Park+Avenue+Building+Sobha+Hartland+Dubai" target="_blank" rel="noopener" data-cursor="hover">Open in Maps <i></i></a>
+      <a class="link-arrow reveal" href="https://www.google.com/maps/search/?api=1&amp;query=One+Park+Avenue+Building+Sobha+Hartland+Dubai" target="_blank" rel="noopener" data-cursor="hover">Open in Maps <i></i></a><p class="section-next"><a class="link-arrow" href="visit.html">Plan your first visit <i></i></a></p>
     </div>
     <div class="location__map reveal">
       <img src="assets/img/reception.jpg" alt="QVee Wellness entrance at One Park Avenue, Sobha Hartland" loading="lazy" width="1000" height="1000">
@@ -372,20 +255,7 @@
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-band section section--dark" aria-label="Book a class">
-  <div class="cta-band__media" data-parallax="0.1"><img src="assets/img/aerial.jpg" alt="" loading="lazy" width="1400" height="1526"></div>
-  <div class="wrap cta-band__inner">
-    <p class="eyebrow eyebrow--light reveal">Begin Your Journey</p>
-    <h2 class="display display--light reveal">Your sanctuary is <em>waiting</em></h2>
-    <p class="body body--light reveal" style="margin-inline:auto">Reserve your first Reformer Pilates class from AED 195 for a solo session, and discover a women-only space designed entirely around you.</p>
-    <div class="cta-band__actions reveal">
-      <a href="membership.html#booking" class="btn btn--solid btn--light" data-cursor="hover"><span>Find Your Plan</span></a><a href="practices.html" class="btn btn--ghost"><span>Explore Practices</span></a>
-      <a href="membership.html" class="btn btn--ghost" data-cursor="hover"><span>View Membership</span></a>
-    </div>
-  </div>
-</section>
-
+<section class="section section--dark journey-cta"><div class="wrap"><p class="eyebrow eyebrow--light">Take your next step</p><h2 class="display display--light">Your next chapter<br>starts with <em>movement.</em></h2><p>Explore the plans, or ask our team to help you choose.</p><div class="cta-band__actions"><a class="btn btn--solid btn--light" href="membership.html#plans"><span>Find Your Plan</span></a><a class="btn btn--ghost" href="mailto:contact@qveewellness.com"><span>Ask the Studio</span></a></div><small>Online booking through Mindbody is coming soon.</small></div></section>
 </main>
 
 <!-- FOOTER -->
@@ -411,7 +281,7 @@
       <div>
         <h3>Connect</h3>
         <a href="mailto:contact@qveewellness.com">Email</a>
-        <a href="membership.html#booking">Book a Class</a>
+        <a href="membership.html#plans">Find Your Plan</a>
         <a href="visit.html">Visit &amp; Contact</a>
       </div>
       <div class="footer__news">
@@ -432,6 +302,6 @@
 
 
 <script src="booking-config.js" defer></script>
-<script src="assets/built/script.XFGEVIRA.js"></script>
+<script src="assets/built/script.6YDEPUW2.js"></script>
 </body>
 </html>

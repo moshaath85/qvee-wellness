@@ -107,10 +107,10 @@
   (function activeNav() {
     const normalisePage = (value) => {
       const path = new URL(value, location.href).pathname.replace(/\/$/, '') || '/';
-      return path === '/index.html' ? '/' : path;
+      return path === '/index.html' || path === '/index' ? '/' : path.replace(/\.html$/, '');
     };
     const current = normalisePage(location.href);
-    $$('.nav a, .menu__nav a').forEach((link) => {
+    $$('.nav a, .menu__nav a, .mobile-nav a').forEach((link) => {
       if (normalisePage(link.href) === current) link.setAttribute('aria-current', 'page');
     });
   })();
@@ -288,7 +288,7 @@
   });
   const scheduleUrl = safeBookingUrl(config.scheduleUrl);
   if (scheduleUrl) {
-    $$('a[href="membership.html#booking"]').forEach((link) => { link.href = scheduleUrl; });
+    $$('[data-booking-link]').forEach((link) => { link.href = scheduleUrl; });
     const status = $('.booking-status .body');
     if (status) status.textContent = 'Choose your class and complete your booking securely through Mindbody.';
     const action = $('.booking-status .btn');
@@ -313,7 +313,9 @@
     const picker = $('.plan-picker', group);
     const buttons = $$('.visit-option', group);
     const compare = $('.compare-plans', group);
-    let selected = 0;
+    const requestedPlan = new URLSearchParams(location.search).get('plan');
+    const requestedIndex = cards.findIndex((card) => $('[data-plan]', card).dataset.plan === requestedPlan);
+    let selected = requestedIndex >= 0 ? requestedIndex : 0;
     let comparing = false;
     if (!picker || !compare || cards.length !== buttons.length) return;
     const render = (announce) => {
@@ -321,7 +323,7 @@
       cards.forEach((card, index) => { card.hidden = !comparing && index !== selected; });
       buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selected)));
       compare.setAttribute('aria-expanded', String(comparing));
-      compare.innerHTML = comparing ? 'Back to my selection <span aria-hidden="true">↙</span>' : 'Compare all four plans <span aria-hidden="true">↗</span>';
+      compare.innerHTML = comparing ? 'Back to my selection <span aria-hidden="true">↙</span>' : 'Compare prices & benefits <span aria-hidden="true">↗</span>';
       if (announce && selectionStatus) selectionStatus.textContent =
         $('h3', cards[selected]).textContent + ', ' + $('.plan__amount', cards[selected]).textContent.trim() +
         ', ' + $('.plan__rate', cards[selected]).textContent.trim();
