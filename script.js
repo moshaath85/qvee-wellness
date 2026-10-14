@@ -105,10 +105,13 @@
 
   /* ---------- Active navigation ---------- */
   (function activeNav() {
-    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    $$('.nav a, .menu__nav a').forEach((a) => {
-      const href = (a.getAttribute('href') || '').split('#')[0].split('/').pop().toLowerCase();
-      if (href && href === path) a.setAttribute('aria-current', 'page');
+    const normalisePage = (value) => {
+      const path = new URL(value, location.href).pathname.replace(/\/$/, '') || '/';
+      return path === '/index.html' ? '/' : path;
+    };
+    const current = normalisePage(location.href);
+    $$('.nav a, .menu__nav a').forEach((link) => {
+      if (normalisePage(link.href) === current) link.setAttribute('aria-current', 'page');
     });
   })();
 
@@ -133,12 +136,16 @@
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (e.isIntersecting) {
+        e.target.classList.remove('is-pending');
         e.target.classList.add('is-in');
         io.unobserve(e.target);
       }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  $$('.reveal').forEach((el) => io.observe(el));
+  $$('.reveal').forEach((el) => {
+    if (!reduce && el.getBoundingClientRect().top > window.innerHeight) el.classList.add('is-pending');
+    io.observe(el);
+  });
 
   /* ---------- Counters ---------- */
   const counters = $$('[data-count]');
@@ -188,7 +195,7 @@
   const cursor = $('#cursor');
   const label = $('.cursor__label', cursor);
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (fine && cursor) {
+  if (fine && cursor && !reduce) {
     let cx = window.innerWidth / 2, cy = window.innerHeight / 2, tx = cx, ty = cy;
     window.addEventListener('mousemove', (e) => {
       tx = e.clientX; ty = e.clientY;
@@ -229,11 +236,24 @@
     if (open) menu.removeAttribute('inert');
     else menu.setAttribute('inert', '');
     toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) requestAnimationFrame(() => { const first = $('a', menu); if (first) first.focus(); });
+    else toggle.focus();
     const links = $$('.menu__nav a', menu);
     links.forEach((a, i) => { a.style.transitionDelay = (open ? 0.18 + i * 0.06 : 0) + 's'; });
   };
   toggle.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
   $$('.menu__nav a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+  document.addEventListener('keydown', (event) => {
+    if (!menu.classList.contains('is-open')) return;
+    if (event.key === 'Escape') { setMenu(false); return; }
+    if (event.key !== 'Tab') return;
+    const focusable = [toggle, ...$$('a[href], button', menu)];
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
 
   /* ---------- Accordion ---------- */
   $$('.accordion__item').forEach((item) => {
@@ -254,36 +274,94 @@
     });
   });
 
-  /* ---------- Forms ---------- */
-  const booking = $('#bookingForm');
-  if (booking) {
-    booking.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = $('#name').value.trim();
-      const email = $('#email').value.trim();
-      const note = $('#formNote');
-      if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        note.style.color = 'var(--gold-lt)';
-        note.textContent = 'Please share your name and a valid email so we can welcome you.';
-        return;
-      }
-      note.style.color = 'var(--gold-lt)';
-      note.textContent = 'Thank you, ' + name + '. Your enquiry has been received — we will be in touch very soon.';
-      booking.reset();
+  /* ---------- Plan enquiries / future Mindbody connection ---------- */
+  const config = window.QVEE_BOOKING || {};
+  const safeBookingUrl = (value) => {
+    try { const url = new URL(value); return url.protocol === 'https:' ? url.href : null; }
+    catch { return null; }
+  };
+  $$('[data-plan]').forEach((link) => {
+    const url = safeBookingUrl(config.plans && config.plans[link.dataset.plan]);
+    if (!url) return;
+    link.href = url;
+    $('span', link).textContent = 'Buy This Plan';
+  });
+  const scheduleUrl = safeBookingUrl(config.scheduleUrl);
+  if (scheduleUrl) {
+    $$('a[href="membership.html#booking"]').forEach((link) => { link.href = scheduleUrl; });
+    const status = $('.booking-status .body');
+    if (status) status.textContent = 'Choose your class and complete your booking securely through Mindbody.';
+    const action = $('.booking-status .btn');
+    if (action) { action.href = scheduleUrl; $('span', action).textContent = 'View Class Schedule'; }
+  }
+  /* ---------- Progressive plan chooser ---------- */
+  const planLinks = $$('.plan-switch a');
+  const planGroups = $$('.plan-group');
+  const selectionStatus = $('.plan-selection-status');
+  const selectCategory = (id) => {
+    if (!planGroups.some((group) => group.id === id)) return;
+    planGroups.forEach((group) => { group.hidden = group.id !== id; });
+    planLinks.forEach((link) => {
+      const active = link.hash === '#' + id;
+      link.classList.toggle('is-active', active);
+      if (active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
+  planGroups.forEach((group) => {
+    const cards = $$('.plan', group);
+    const picker = $('.plan-picker', group);
+    const buttons = $$('.visit-option', group);
+    const compare = $('.compare-plans', group);
+    let selected = 0;
+    let comparing = false;
+    if (!picker || !compare || cards.length !== buttons.length) return;
+    const render = (announce) => {
+      group.classList.toggle('is-comparing', comparing);
+      cards.forEach((card, index) => { card.hidden = !comparing && index !== selected; });
+      buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selected)));
+      compare.setAttribute('aria-expanded', String(comparing));
+      compare.innerHTML = comparing ? 'Back to my selection <span aria-hidden="true">↙</span>' : 'Compare all four plans <span aria-hidden="true">↗</span>';
+      if (announce && selectionStatus) selectionStatus.textContent =
+        $('h3', cards[selected]).textContent + ', ' + $('.plan__amount', cards[selected]).textContent.trim() +
+        ', ' + $('.plan__rate', cards[selected]).textContent.trim();
+    };
+    buttons.forEach((button, index) => button.addEventListener('click', () => {
+      selected = index; comparing = false; render(true);
+    }));
+    compare.addEventListener('click', () => { comparing = !comparing; render(false); });
+    picker.hidden = false;
+    group.classList.add('is-enhanced');
+    render(false);
+  });
+  if (planLinks.length) {
+    selectCategory(location.hash === '#monthly' ? 'monthly' : 'packages');
+    planLinks.forEach((link) => link.addEventListener('click', (event) => {
+      event.preventDefault();
+      selectCategory(link.hash.slice(1));
+      history.replaceState(null, '', link.hash);
+    }));
+    window.addEventListener('hashchange', () => selectCategory(location.hash.slice(1)));
+    // Links below the chooser can reveal the other category before scrolling.
+    $$('a[href="#packages"], a[href="#monthly"]').forEach((link) => {
+      if (link.closest('.plan-switch')) return;
+      link.addEventListener('click', () => selectCategory(link.hash.slice(1)));
     });
   }
 
-  const news = $('#newsForm');
-  if (news) {
-    news.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = $('input', news);
-      if (!input.value.trim()) return;
-      input.value = '';
-      input.placeholder = 'Thank you — welcome to The QVee Letter';
-      setTimeout(() => { input.placeholder = 'Email address'; }, 3200);
-    });
-  }
+  /* ---------- Email enquiries: prepare a draft, never claim receipt ---------- */
+  const booking = $('#bookingForm');
+  if (booking) booking.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!booking.reportValidity()) return;
+    const data = new FormData(booking);
+    const body = ['Name: ' + data.get('name'), 'Email: ' + data.get('email'),
+      'Phone: ' + data.get('phone'), 'Interest: ' + data.get('interest'),
+      '', data.get('message') || ''].join('\n');
+    location.href = 'mailto:contact@qveewellness.com?subject=' +
+      encodeURIComponent('QVee Wellness enquiry') + '&body=' + encodeURIComponent(body);
+    $('#formNote').textContent = 'Your email app will open with a draft. Send the email to submit your enquiry. If it does not open, email contact@qveewellness.com directly.';
+  });
 
   /* ---------- Anchors with header offset ---------- */
   $$('a[href^="#"]').forEach((a) => {

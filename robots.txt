@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /404.html
-Disallow: /offline.html
 
-# QVee Wellness — Women's Luxury Wellness & Pilates, Sobha Hartland, Dubai
 Sitemap: https://www.qveewellness.com/sitemap.xml

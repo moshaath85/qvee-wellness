@@ -4,3 +4,6 @@ dist/
 *.log
 .netlify/
 .vercel/
+
+# Local audit artifacts and recoverable backups (never deploy)
+.project-notes/

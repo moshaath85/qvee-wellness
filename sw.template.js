@@ -38,7 +38,7 @@ self.addEventListener('activate', (event) => {
     (async () => {
       const keys = await caches.keys();
       await Promise.all(
-        keys.filter((k) => k !== CACHE && k !== RUNTIME).map((k) => caches.delete(k))
+        keys.filter((k) => k.startsWith('qvee-') && k !== CACHE && k !== RUNTIME).map((k) => caches.delete(k))
       );
       if (self.registration.navigationPreload) {
         await self.registration.navigationPreload.enable().catch(() => undefined);

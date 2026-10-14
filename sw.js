@@ -8,7 +8,7 @@
      • HTML pages     → network-first, cache fallback, offline page
    ========================================================= */
 
-const VERSION = '3d024c3aa0';
+const VERSION = '324ad1f7ea';
 const CACHE = `qvee-${VERSION}`;
 const RUNTIME = `qvee-runtime-${VERSION}`;
 
@@ -18,20 +18,11 @@ const PRECACHE = [
   "./offline.html",
   "./404.html",
   "./about.html",
-  "./community/aerial-yoga-beginners-guide.html",
-  "./community/benefits-pilates-for-women.html",
-  "./community/index.html",
-  "./community/pilates-for-beginners-dubai.html",
-  "./community/pre-and-postnatal-pilates-dubai.html",
-  "./community/reformer-pilates-vs-mat-pilates.html",
-  "./community/what-to-wear-pilates-dubai.html",
-  "./gallery.html",
   "./membership.html",
   "./practices.html",
-  "./studio.html",
   "./visit.html",
-  "./assets/built/styles.ZSXH5R2S.css",
-  "./assets/built/script.KQFW7JJU.js",
+  "./assets/built/styles.7N6YW2RV.css",
+  "./assets/built/script.XFGEVIRA.js",
   "./assets/logo/qvee-logo-light.png",
   "./assets/logo/qvee-logo-dark.png",
   "./assets/img/hero.jpg",
@@ -63,7 +54,7 @@ self.addEventListener('activate', (event) => {
     (async () => {
       const keys = await caches.keys();
       await Promise.all(
-        keys.filter((k) => k !== CACHE && k !== RUNTIME).map((k) => caches.delete(k))
+        keys.filter((k) => k.startsWith('qvee-') && k !== CACHE && k !== RUNTIME).map((k) => caches.delete(k))
       );
       if (self.registration.navigationPreload) {
         await self.registration.navigationPreload.enable().catch(() => undefined);

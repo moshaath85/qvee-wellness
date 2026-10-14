@@ -11,7 +11,7 @@
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.google.com https://maps.googleapis.com 'sha256-0Ywux3QOsMnI7wA4ZWesQ0CmDEY8yPbfiQMkypQYFKs=' 'sha256-1GX+8lh/pC8Wuo/12XlbTHziiU8d2yLWR+CPPTR959E=' 'sha256-AHT4xUQvDb+TCXw5flJMgCHn5Cthyl3/B8kNuvgF2wU=' 'sha256-ALATRb3IsOybHuFbonAAmxsoE9G42daaJNZBZ8LMmtY=' 'sha256-DpzyEm8A4InaPqezC3lxAmMEgfwoNkMARNIS04Sv/uU=' 'sha256-EjcG2nvZETeHegmn6xDDxXkjRObOS8/vguYWjRgP9W8=' 'sha256-LhkiEsJZ71GJgDaLyjVpi619Rpdiz++S9jH9YYJ5pLU=' 'sha256-Pjx1+HV8WWiMhQef5H+4ovrmuI03EF3f/BtheqQ6dWM=' 'sha256-RySXf1GoUbQlUl+jqoxJuiKLwYNV26zIRKJnfrxvvys=' 'sha256-ZQdPea27MJO+8x9p10WwwGXSkPeMzSjdAwmPxBGFs/k=' 'sha256-cX3KqOhCaOkif5rOwKsSW0l6Ih9PIK2U2kuX4OegWJw=' 'sha256-rlMscllSWjzsK+MYNIt1Mswahkccc43a4KuUILNSJZ0=' 'sha256-tEdRT4T1FQYnhUIv3BBs2DRBSnyHMSeTvTYcjc2DSXw=' 'sha256-wMRXUL2OnewUkVKTNkMZLIMdrCDnJaEagt1mysFBgEE='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; frame-src https://www.google.com; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'self'"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.google.com https://maps.googleapis.com 'sha256-6MEFcyNv1lIMnBu+3gzo8dPTalw1aAPG4LT1v7QkIJY=' 'sha256-81OInM7P4ASd8o5fVvwJn8Ka7ZhOzSPZ6ECOl/Ri/C8=' 'sha256-c06QuusYXj1uPjeH0lTp9zfQjDGEBEXlPFDPddrpKy8=' 'sha256-g7fbMLaT7APg0st5FnuL09BBzb8LbT1JoHduWZeKlFc=' 'sha256-nYQDt042uJ+A3jrh43l7dUQcGNKQi2c+ooxWHuFHBz8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; frame-src https://www.google.com; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'self'"
 </IfModule>
 
 # ---------- Compression ----------
@@ -40,7 +40,7 @@
 </IfModule>
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(css|js)$">
+  <FilesMatch "^(styles|script)\.[A-Za-z0-9_-]+\.(css|js)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
   <FilesMatch "\.(png|jpe?g|webp|avif|svg|gif|ico|woff2?)$">
@@ -54,19 +54,21 @@
   </FilesMatch>
 </IfModule>
 
-# ---------- Clean URLs (extensionless) ----------
+# ---------- Canonical URLs ----------
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  RewriteCond %{HTTP_HOST} ^qveewellness\.com$ [NC]
+  RewriteRule ^ https://www.qveewellness.com%{REQUEST_URI} [R=301,L,NE]
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
+  RewriteRule ^(about|practices|membership|visit)/?$ /$1.html [R=301,L]
+</IfModule>
 
-  # Redirect /about.html -> /about
-  RewriteCond %{THE_REQUEST} \s/+([^?\s]+)\.html[\s?] [NC]
-  RewriteRule ^ /%1 [R=301,L]
-
-  # Serve /about from /about.html
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\.html -f
-  RewriteRule ^(.*)$ $1.html [L]
+<IfModule mod_headers.c>
+  <Files "booking-config.js">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </Files>
 </IfModule>
 
 # ---------- Custom error page ----------

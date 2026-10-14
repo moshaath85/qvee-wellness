@@ -64,9 +64,14 @@ server {
         add_header Cache-Control "no-cache, must-revalidate" always;
     }
 
-    # ---------- Clean URLs ----------
+    # ---------- Canonical URLs ----------
+    if ($host = qveewellness.com) { return 301 https://www.qveewellness.com$request_uri; }
+    if ($request_uri ~ "^/index\.html(?:\?|$)") { return 301 /$is_args$args; }
+    location ~ ^/(about|practices|membership|visit)/?$ { return 301 /$1.html$is_args$args; }
+
+    # ---------- Static routing ----------
     location / {
-        try_files $uri $uri.html $uri/ =404;
+        try_files $uri $uri/ =404;
     }
 
     error_page 404 /404.html;

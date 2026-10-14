@@ -28,7 +28,7 @@ const WATCH = process.argv.includes('--watch');
 const NOW = new Date().toISOString().slice(0, 10);
 
 /** Static files copied verbatim into the deploy output. */
-const DIST_ITEMS = ['assets', 'robots.txt', 'sitemap.xml', 'site.webmanifest', 'sw.js'];
+const DIST_ITEMS = ['assets', 'robots.txt', 'sitemap.xml', 'site.webmanifest', 'sw.js', 'booking-config.js', '_redirects'];
 
 /** Deployment configs generated from config/*.tpl with the current CSP. */
 const DEPLOY_CONFIGS = [
@@ -142,7 +142,7 @@ async function writeServiceWorker(pages, assets) {
   if (!existsSync(templatePath)) return null;
 
   const version = createHash('sha1')
-    .update((assets.styles || '') + (assets.script || '') + pages.join('|') + NOW)
+    .update((assets.styles || '') + (assets.script || '') + (await Promise.all(pages.map((page) => readFile(path.join(ROOT, page), 'utf8')))).join('|') + (await readFile(path.join(ROOT, 'booking-config.js'), 'utf8')) + NOW)
     .digest('hex')
     .slice(0, 10);
 

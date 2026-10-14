@@ -16,7 +16,7 @@ import { extname, join, normalize, sep } from 'node:path';
 import { brotliCompressSync, gzipSync, constants } from 'node:zlib';
 import path from 'node:path';
 
-const ROOT = path.dirname(new URL(import.meta.url).pathname);
+const ROOT = path.join(path.dirname(new URL(import.meta.url).pathname), 'dist');
 const argPort = (() => {
   const i = process.argv.indexOf('--port');
   return i > -1 ? Number(process.argv[i + 1]) : Number(process.env.PORT || 8913);
@@ -116,6 +116,7 @@ function pickEncoding(header = '') {
 
 function resolveFile(urlPath) {
   let p = decodeURIComponent(urlPath.split('?')[0]);
+  if (p.split(/[\/\\]/).some((segment) => segment.startsWith('.'))) return null;
   p = normalize(p).replace(/^(\.\.[/\\])+/, '');
   if (p.includes('\0')) return null;
 
@@ -147,6 +148,14 @@ const server = http.createServer(async (req, res) => {
   const urlPath = req.url || '/';
 
   try {
+    const requested = new URL(urlPath, 'http://localhost');
+    const aliases = { '/index.html': '/', '/about': '/about.html', '/practices': '/practices.html', '/membership': '/membership.html', '/visit': '/visit.html' };
+    const key = requested.pathname === '/' ? '/' : requested.pathname.replace(/\/$/, '');
+    if (aliases[key]) {
+      res.writeHead(301, { Location: aliases[key] + requested.search });
+      res.end();
+      return;
+    }
     let found = resolveFile(urlPath);
     if (found) {
       const info = await stat(found.abs).catch(() => null);

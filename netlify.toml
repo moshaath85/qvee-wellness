@@ -12,11 +12,7 @@
   NPM_FLAGS = "--no-audit --no-fund"
 
 # Caching + security headers live in the `_headers` file (copied into dist/).
-# Clean URLs: /about  →  /about.html
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
+# Canonical redirects and the 404 fallback are in dist/_redirects.
 
 [[headers]]
   for = "/*"

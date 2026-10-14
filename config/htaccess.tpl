@@ -40,7 +40,7 @@
 </IfModule>
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(css|js)$">
+  <FilesMatch "^(styles|script)\.[A-Za-z0-9_-]+\.(css|js)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
   <FilesMatch "\.(png|jpe?g|webp|avif|svg|gif|ico|woff2?)$">
@@ -54,19 +54,21 @@
   </FilesMatch>
 </IfModule>
 
-# ---------- Clean URLs (extensionless) ----------
+# ---------- Canonical URLs ----------
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  RewriteCond %{HTTP_HOST} ^qveewellness\.com$ [NC]
+  RewriteRule ^ https://www.qveewellness.com%{REQUEST_URI} [R=301,L,NE]
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
+  RewriteRule ^(about|practices|membership|visit)/?$ /$1.html [R=301,L]
+</IfModule>
 
-  # Redirect /about.html -> /about
-  RewriteCond %{THE_REQUEST} \s/+([^?\s]+)\.html[\s?] [NC]
-  RewriteRule ^ /%1 [R=301,L]
-
-  # Serve /about from /about.html
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\.html -f
-  RewriteRule ^(.*)$ $1.html [L]
+<IfModule mod_headers.c>
+  <Files "booking-config.js">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </Files>
 </IfModule>
 
 # ---------- Custom error page ----------
