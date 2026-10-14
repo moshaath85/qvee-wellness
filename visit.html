@@ -9,20 +9,25 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="QVee Wellness L.L.C">
 <meta name="theme-color" content="#F4EFE9">
-<link rel="canonical" href="https://www.qveewellness.com/visit.html">
+<link rel="canonical" href="https://qvee-wellness.netlify.app/visit.html">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="QVee Wellness">
 <meta property="og:locale" content="en_AE">
 <meta property="og:title" content="Visit QVee Wellness | Pilates in Sobha Hartland, Dubai">
 <meta property="og:description" content="Find QVee Wellness at One Park Avenue, Sobha Hartland, Dubai. Get directions, arrival details and contact our women-only Pilates and wellness studio.">
-<meta property="og:url" content="https://www.qveewellness.com/visit.html">
-<meta property="og:image" content="https://www.qveewellness.com/assets/img/reception.jpg">
+<meta property="og:url" content="https://qvee-wellness.netlify.app/visit.html">
+<meta property="og:image" content="https://qvee-wellness.netlify.app/assets/social/qvee-share-v1.jpg">
 
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:secure_url" content="https://qvee-wellness.netlify.app/assets/social/qvee-share-v1.jpg">
+<meta property="og:image:alt" content="QVee Wellness — Pilates for strength. Space for you. Women-only wellness in Sobha Hartland, Dubai.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Visit QVee Wellness | Pilates in Sobha Hartland, Dubai">
 <meta name="twitter:description" content="Find QVee Wellness at One Park Avenue, Sobha Hartland, Dubai. Get directions, arrival details and contact our women-only Pilates and wellness studio.">
-<meta name="twitter:image" content="https://www.qveewellness.com/assets/img/reception.jpg">
+<meta name="twitter:image" content="https://qvee-wellness.netlify.app/assets/social/qvee-share-v1.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +36,7 @@
 <link rel="icon" href="assets/logo/qvee-logo-dark.png">
 <link rel="apple-touch-icon" href="assets/logo/qvee-logo-dark.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="stylesheet" href="assets/built/styles.Y3SZQEZB.css">
+<link rel="stylesheet" href="assets/built/styles.KSN2UDXE.css">
 
 <script type="application/ld+json">
 {
@@ -39,15 +44,15 @@
   "@graph": [
     {
       "@type": "ContactPage",
-      "@id": "https://www.qveewellness.com/visit.html#webpage",
-      "url": "https://www.qveewellness.com/visit.html",
+      "@id": "https://qvee-wellness.netlify.app/visit.html#webpage",
+      "url": "https://qvee-wellness.netlify.app/visit.html",
       "name": "Visit & Contact | QVee Wellness Pilates Studio, Dubai",
       "inLanguage": "en",
       "isPartOf": {
-        "@id": "https://www.qveewellness.com/#website"
+        "@id": "https://qvee-wellness.netlify.app/#website"
       },
       "about": {
-        "@id": "https://www.qveewellness.com/#studio"
+        "@id": "https://qvee-wellness.netlify.app/#studio"
       }
     },
     {
@@ -55,10 +60,10 @@
         "HealthClub",
         "LocalBusiness"
       ],
-      "@id": "https://www.qveewellness.com/#studio",
+      "@id": "https://qvee-wellness.netlify.app/#studio",
       "name": "QVee Wellness",
-      "url": "https://www.qveewellness.com/",
-      "image": "https://www.qveewellness.com/assets/img/hero.jpg",
+      "url": "https://qvee-wellness.netlify.app/",
+      "image": "https://qvee-wellness.netlify.app/assets/img/hero.jpg",
       "email": "contact@qveewellness.com",
       "priceRange": "Solo session AED 195 + VAT; monthly memberships AED 680 + VAT\u20132,700",
       "currenciesAccepted": "AED",
@@ -83,13 +88,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://www.qveewellness.com/"
+          "item": "https://qvee-wellness.netlify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Visit & Contact",
-          "item": "https://www.qveewellness.com/visit.html"
+          "item": "https://qvee-wellness.netlify.app/visit.html"
         }
       ]
     }
@@ -194,12 +199,17 @@
       </dl>
     </div>
 
-    <form class="contact__form reveal" id="bookingForm">
+    <form class="contact__form reveal" id="bookingForm" name="qvee-enquiry" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="company-website">
+<input type="hidden" name="form-name" value="qvee-enquiry">
+<input type="hidden" name="requested-plan" id="requestedPlan" value="">
+<p class="selected-plan field--full" id="selectedPlan" hidden></p>
+<p hidden><label>Leave this blank: <input name="company-website" autocomplete="off" tabindex="-1"></label></p>
       <div class="field"><input type="text" id="name" name="name" autocomplete="name" placeholder=" " required><label for="name">Full name</label></div>
       <div class="field"><input type="email" id="email" name="email" autocomplete="email" placeholder=" " required><label for="email">Email address</label></div>
       <div class="field"><input type="tel" id="phone" name="phone" autocomplete="tel" placeholder=" "><label for="phone">Phone number</label></div>
       <div class="field field--select">
         <select id="interest" name="interest">
+          <option value="Class package">Class package enquiry</option>
           <option value="Reformer Pilates">Reformer Pilates</option>
           <option value="Private Pilates">Private Pilates</option>
           <option value="Semi-Private Pilates">Semi-Private Pilates</option>
@@ -212,8 +222,8 @@
         <label for="interest">I am interested in</label>
       </div>
       <div class="field field--full"><textarea id="message" name="message" rows="3" placeholder=" "></textarea><label for="message">Your message</label></div>
-      <button type="submit" class="btn btn--solid btn--light field--full" data-cursor="hover"><span>Prepare Email Enquiry</span></button>
-      <p class="contact__note" id="formNote" role="status">This form prepares a draft in your email app. You must send it to submit your enquiry. Online booking through Mindbody is coming soon.</p>
+      <button type="submit" class="btn btn--solid btn--light field--full" data-cursor="hover"><span>Send Enquiry</span></button>
+      <p class="contact__note" id="formNote" role="status">Your enquiry is sent securely to the studio via Netlify Forms. Please do not include medical or payment details. This is an enquiry, not a confirmed class booking. <a href="privacy.html">How we handle your information</a>.</p>
     </form>
   </div>
 </section>
@@ -274,6 +284,7 @@
         <a href="mailto:contact@qveewellness.com">Email</a>
         <a href="membership.html#plans">Find Your Plan</a>
         <a href="visit.html">Visit &amp; Contact</a>
+        <a href="privacy.html">Privacy</a>
       </div>
       <div class="footer__news">
         <h3>The QVee Letter</h3>
@@ -290,6 +301,6 @@
 </footer>
 
 <script src="booking-config.js" defer></script>
-<script src="assets/built/script.75BUWMC4.js"></script>
+<script src="assets/built/script.RVX5XXRB.js"></script>
 </body>
 </html>

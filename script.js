@@ -51,29 +51,56 @@
     requestAnimationFrame(revealHero);
   }
 
-  /* ---------- Hero cinematic slideshow ---------- */
+  /* ---------- Slow cinematic dissolves, with playback control ---------- */
   const slides = $$('.hero__slide');
   const heroBars = $$('.hero__bar');
-  if (slides.length > 1) {
+  const hero = $('.hero');
+  const pauseControl = $('#heroPause');
+  if (slides.length > 1 && hero) {
     let idx = 0;
     let timer = null;
-    const DURATION = 5600;
-    const show = (next) => {
-      slides[idx].classList.remove('is-active');
-      if (heroBars[idx]) heroBars[idx].classList.remove('is-active');
-      idx = (next + slides.length) % slides.length;
-      slides[idx].classList.add('is-active');
-      if (heroBars[idx]) heroBars[idx].classList.add('is-active');
+    let paused = reduce;
+    let switching = false;
+    const DURATION = 9000;
+    hero.style.setProperty('--slide-duration', DURATION + 'ms');
+    const stop = () => { clearTimeout(timer); timer = null; };
+    const schedule = () => {
+      stop();
+      if (!paused && !document.hidden) timer = setTimeout(() => show(idx + 1), DURATION);
     };
-    const start = () => { if (!reduce) timer = setInterval(() => show(idx + 1), DURATION); };
-    start();
-    heroBars.forEach((bar, i) => {
-      bar.addEventListener('click', () => {
-        if (timer) { clearInterval(timer); timer = null; }
-        show(i);
-        start();
-      });
+    const show = async (next) => {
+      if (switching) return;
+      const target = (next + slides.length) % slides.length;
+      if (target === idx) { schedule(); return; }
+      switching = true;
+      const img = $('img', slides[target]);
+      try { if (img && img.decode) await img.decode(); } catch { /* keep graceful fallback */ }
+      slides[idx].classList.remove('is-active');
+      heroBars[idx].classList.remove('is-active');
+      heroBars[idx].setAttribute('aria-pressed', 'false');
+      idx = target;
+      slides[idx].classList.add('is-active');
+      heroBars[idx].classList.add('is-active');
+      heroBars[idx].setAttribute('aria-pressed', 'true');
+      switching = false;
+      schedule();
+    };
+    const syncPause = () => {
+      hero.classList.toggle('hero--paused', paused || document.hidden);
+      if (pauseControl) {
+        pauseControl.textContent = paused ? 'Play' : 'Pause';
+        pauseControl.setAttribute('aria-label', paused ? 'Play studio slideshow' : 'Pause studio slideshow');
+        pauseControl.setAttribute('aria-pressed', String(paused));
+      }
+      schedule();
+    };
+    heroBars.forEach((bar, index) => {
+      bar.setAttribute('aria-pressed', String(index === idx));
+      bar.addEventListener('click', () => { stop(); show(index); });
     });
+    if (pauseControl) { pauseControl.hidden = false; pauseControl.addEventListener('click', () => { paused = !paused; syncPause(); }); }
+    document.addEventListener('visibilitychange', syncPause);
+    syncPause();
   }
 
   /* ---------- Gallery lightbox ---------- */
@@ -353,18 +380,47 @@
     });
   }
 
-  /* ---------- Email enquiries: prepare a draft, never claim receipt ---------- */
+  /* ---------- Netlify-managed enquiries ---------- */
   const booking = $('#bookingForm');
-  if (booking) booking.addEventListener('submit', (event) => {
+  if (booking) {
+    const key = new URLSearchParams(location.search).get('plan');
+    const planNames = { solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package',
+      'month-four': '4 Visits / Month', 'month-eight': '8 Visits / Month',
+      'month-twelve': '12 Visits / Month', 'month-twenty': '20 Visits / Month' };
+    if (planNames[key]) {
+      $('#requestedPlan').value = planNames[key];
+      $('#selectedPlan').textContent = 'Your selected plan: ' + planNames[key];
+      $('#selectedPlan').hidden = false;
+      $('#interest').value = key.startsWith('month-') ? 'Membership' : 'Class package';
+    }
+  }
+  if (booking) booking.addEventListener('submit', async (event) => {
     event.preventDefault();
-    if (!booking.reportValidity()) return;
-    const data = new FormData(booking);
-    const body = ['Name: ' + data.get('name'), 'Email: ' + data.get('email'),
-      'Phone: ' + data.get('phone'), 'Interest: ' + data.get('interest'),
-      '', data.get('message') || ''].join('\n');
-    location.href = 'mailto:contact@qveewellness.com?subject=' +
-      encodeURIComponent('QVee Wellness enquiry') + '&body=' + encodeURIComponent(body);
-    $('#formNote').textContent = 'Your email app will open with a draft. Send the email to submit your enquiry. If it does not open, email contact@qveewellness.com directly.';
+    if (!booking.reportValidity() || booking.dataset.submitting === 'true') return;
+    const note = $('#formNote');
+    const submit = $('button[type="submit"]', booking);
+    const payload = new URLSearchParams(new FormData(booking));
+    if (payload.get('company-website')) return;
+    booking.dataset.submitting = 'true';
+    submit.disabled = true;
+    note.textContent = 'Sending your enquiry…';
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch('/thank-you.html', {
+        method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: payload.toString(), signal: controller.signal
+      });
+      if (!response.ok) throw new Error('Enquiry service unavailable');
+      note.textContent = 'Thank you. Your enquiry has been submitted. Our team will be in touch. This is not a confirmed class booking.';
+      booking.reset();
+    } catch {
+      note.textContent = 'We could not submit your enquiry. Your details are still here. Please try again or email contact@qveewellness.com directly.';
+    } finally {
+      clearTimeout(timeout);
+      submit.disabled = false;
+      delete booking.dataset.submitting;
+    }
   });
 
   /* ---------- Anchors with header offset ---------- */

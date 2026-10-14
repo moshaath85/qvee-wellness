@@ -26,6 +26,9 @@ const DIST = path.join(ROOT, 'dist');
 const SKIP_DIRS = new Set(['node_modules', 'assets', 'dist', '.git', '.netlify', '.vercel']);
 const WATCH = process.argv.includes('--watch');
 const NOW = new Date().toISOString().slice(0, 10);
+const SITE_CONFIG = JSON.parse(await readFile(path.join(ROOT, 'site-config.json'), 'utf8'));
+const SITE_ORIGIN = new URL(process.env.SITE_URL || SITE_CONFIG.canonicalOrigin).origin;
+if (!SITE_ORIGIN.startsWith('https://')) throw new Error('SITE_URL must use HTTPS');
 
 /** Static files copied verbatim into the deploy output. */
 const DIST_ITEMS = ['assets', 'robots.txt', 'sitemap.xml', 'site.webmanifest', 'sw.js', 'booking-config.js', '_redirects'];
@@ -114,6 +117,7 @@ async function rewriteHtml(pages, assets) {
     const file = path.join(ROOT, rel);
     let html = await readFile(file, 'utf8');
     const before = html;
+    html = html.replace(/https:\/\/(?:www\.)?qveewellness\.com|https:\/\/qvee-wellness\.netlify\.app/g, SITE_ORIGIN);
 
     if (assets.styles) {
       html = html.replace(
@@ -142,7 +146,7 @@ async function writeServiceWorker(pages, assets) {
   if (!existsSync(templatePath)) return null;
 
   const version = createHash('sha1')
-    .update((assets.styles || '') + (assets.script || '') + (await Promise.all(pages.map((page) => readFile(path.join(ROOT, page), 'utf8')))).join('|') + (await readFile(path.join(ROOT, 'booking-config.js'), 'utf8')) + NOW)
+    .update((assets.styles || '') + (assets.script || '') + (await Promise.all(pages.map((page) => readFile(path.join(ROOT, page), 'utf8')))).join('|') + (await readFile(path.join(ROOT, 'booking-config.js'), 'utf8')) + (await readFile(templatePath, 'utf8')) + NOW)
     .digest('hex')
     .slice(0, 10);
 
@@ -225,6 +229,11 @@ async function run() {
   for (const [k, v] of Object.entries(assets)) if (v) sizes[k] = await measure(v);
 
   const pages = await findHtml();
+  for (const file of ['sitemap.xml', 'robots.txt']) {
+    const filePath = path.join(ROOT, file);
+    const value = await readFile(filePath, 'utf8');
+    await writeFile(filePath, value.replace(/https:\/\/(?:www\.)?qveewellness\.com|https:\/\/qvee-wellness\.netlify\.app/g, SITE_ORIGIN));
+  }
   const changed = await rewriteHtml(pages, assets);
   const sw = await writeServiceWorker(pages, assets);
   await writeManifest(assets, sizes, { sw });

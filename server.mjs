@@ -148,6 +148,11 @@ const server = http.createServer(async (req, res) => {
   const urlPath = req.url || '/';
 
   try {
+    if (!['GET', 'HEAD'].includes(req.method)) {
+      res.writeHead(405, { Allow: 'GET, HEAD', 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Forms are handled by Netlify on the deployed site.');
+      return;
+    }
     const requested = new URL(urlPath, 'http://localhost');
     const aliases = { '/index.html': '/', '/about': '/about.html', '/practices': '/practices.html', '/membership': '/membership.html', '/visit': '/visit.html' };
     const key = requested.pathname === '/' ? '/' : requested.pathname.replace(/\/$/, '');

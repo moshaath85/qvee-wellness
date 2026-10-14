@@ -22,6 +22,13 @@ Open the URL printed by the server. The server serves `dist/`, so rebuild after 
 
 ## Deploy
 
-Publish `dist/` only. The build generates security headers, redirects, cache configuration, service worker and hashed assets. Canonical production origin is `https://www.qveewellness.com`; existing content routes retain `.html` except the homepage `/`.
+Publish `dist/` only. The build generates security headers, redirects, cache configuration, service worker and hashed assets. Canonical production origin is configured in `site-config.json` (currently `https://qvee-wellness.netlify.app`). Override with `SITE_URL` only after validating the replacement domain and HTTPS.; existing content routes retain `.html` except the homepage `/`.
 
 No production publication or live Mindbody setup has been performed. Review tax, validity, Guest Pass, yoga access and legal policies before launch.
+
+
+## Managed form backend
+
+`qvee-enquiry` is a Netlify Form with a honeypot. Enable automatic form detection in the Netlify project and redeploy if the form is not recognized. Successful submissions are stored in the Netlify Forms panel; email notifications are separate and must be configured in Netlify. The local static server intentionally rejects POST requests. Never treat the site as a payment or booking backend until Mindbody is activated.
+
+The social card source and prompt are retained inside `.project-notes/`; the deployable JPEG is `assets/social/qvee-share-v1.jpg`.

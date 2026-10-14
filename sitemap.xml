@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://www.qveewellness.com/</loc><lastmod>2026-10-14</lastmod></url>
-<url><loc>https://www.qveewellness.com/about.html</loc><lastmod>2026-10-14</lastmod></url>
-<url><loc>https://www.qveewellness.com/practices.html</loc><lastmod>2026-10-14</lastmod></url>
-<url><loc>https://www.qveewellness.com/membership.html</loc><lastmod>2026-10-14</lastmod></url>
-<url><loc>https://www.qveewellness.com/visit.html</loc><lastmod>2026-10-14</lastmod></url>
+<url><loc>https://qvee-wellness.netlify.app/</loc><lastmod>2026-10-14</lastmod></url>
+<url><loc>https://qvee-wellness.netlify.app/about.html</loc><lastmod>2026-10-14</lastmod></url>
+<url><loc>https://qvee-wellness.netlify.app/practices.html</loc><lastmod>2026-10-14</lastmod></url>
+<url><loc>https://qvee-wellness.netlify.app/membership.html</loc><lastmod>2026-10-14</lastmod></url>
+<url><loc>https://qvee-wellness.netlify.app/visit.html</loc><lastmod>2026-10-14</lastmod></url>
+<url><loc>https://qvee-wellness.netlify.app/privacy.html</loc><lastmod>2026-10-14</lastmod></url>
 </urlset>
