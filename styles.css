@@ -866,3 +866,6 @@ main [id] { scroll-margin-top:105px; }
 body.menu-open .header { background:var(--ink); }
 .grain { display:none; }
 @media(max-width:1000px) { .cursor { display:none !important; } }
+
+.plan__period { font:400 .48em var(--font-sans); color:var(--stone); white-space:nowrap; }
+.plan--premium .plan__period { color:var(--sand-2); }
