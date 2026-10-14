@@ -20,35 +20,27 @@
     });
   }
 
-  /* ---------- Preloader (home only) ---------- */
+  /* ---------- A short branded welcome; never artificial percentages ---------- */
   const preloader = $('#preloader');
-  const bar = $('#preloaderBar');
-  const count = $('#preloaderCount');
-
-  if (preloader && bar && count) {
-    document.body.classList.add('is-loading');
-    let progress = 0;
-    const tick = setInterval(() => {
-      progress += Math.random() * 14 + 4;
-      if (progress >= 100) { progress = 100; clearInterval(tick); finish(); }
-      bar.style.width = progress + '%';
-      count.textContent = String(Math.round(progress)).padStart(2, '0');
-    }, 130);
-
-    function finish() {
-      count.textContent = '100';
-      setTimeout(() => {
-        preloader.classList.add('is-done');
-        document.body.classList.remove('is-loading');
-        document.body.classList.add('hero-in');
-        revealHero();
-        setTimeout(() => preloader.remove(), 1000);
-      }, 450);
-    }
-  } else {
-    document.body.classList.remove('is-loading');
+  const startHero = () => {
     document.body.classList.add('hero-in');
     requestAnimationFrame(revealHero);
+  };
+  if (preloader && document.documentElement.classList.contains('has-brand-intro')) {
+    const firstImage = $('.hero__slide.is-active img');
+    const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+    const ready = Promise.allSettled([
+      firstImage && firstImage.decode ? firstImage.decode() : Promise.resolve(),
+      document.fonts ? document.fonts.ready : Promise.resolve()
+    ]);
+    Promise.all([delay(700), Promise.race([ready, delay(1800)])]).then(() => {
+      document.documentElement.classList.remove('has-brand-intro');
+      startHero();
+      setTimeout(() => preloader.remove(), 650);
+    });
+  } else {
+    if (preloader) preloader.remove();
+    startHero();
   }
 
   /* ---------- Slow cinematic dissolves, with playback control ---------- */
