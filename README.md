@@ -29,6 +29,6 @@ No production publication or live Mindbody setup has been performed. Review tax,
 
 ## Managed form backend
 
-`qvee-enquiry` is a Netlify Form with a honeypot. Enable automatic form detection in the Netlify project and redeploy if the form is not recognized. Successful submissions are stored in the Netlify Forms panel; email notifications are separate and must be configured in Netlify. The local static server intentionally rejects POST requests. Never treat the site as a payment or booking backend until Mindbody is activated.
+`qvee-enquiry` is prepared as a Netlify Form with a honeypot. `enquiryMode` is currently `email`, because the live Netlify POST check returned 404 and the available account is restricted. The form therefore prepares an email draft instead of claiming online receipt. Enable automatic form detection in the Netlify project and redeploy if the form is not recognized. After a verified test, set `enquiryMode` to `netlify` and rebuild. Successful submissions are stored in the Netlify Forms panel; email notifications are separate and must be configured in Netlify. The local static server intentionally rejects POST requests. Never treat the site as a payment or booking backend until Mindbody is activated.
 
 The social card source and prompt are retained inside `.project-notes/`; the deployable JPEG is `assets/social/qvee-share-v1.jpg`.

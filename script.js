@@ -383,6 +383,10 @@
   /* ---------- Netlify-managed enquiries ---------- */
   const booking = $('#bookingForm');
   if (booking) {
+    if (config.enquiryMode === 'netlify') {
+      $('button[type="submit"] span', booking).textContent = 'Send Enquiry';
+      $('#formNote').textContent = 'Your enquiry is sent to the studio via Netlify Forms. Please do not include medical or payment details. This does not confirm a booking.';
+    }
     const key = new URLSearchParams(location.search).get('plan');
     const planNames = { solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package',
       'month-four': '4 Visits / Month', 'month-eight': '8 Visits / Month',
@@ -398,6 +402,16 @@
     event.preventDefault();
     if (!booking.reportValidity() || booking.dataset.submitting === 'true') return;
     const note = $('#formNote');
+    if (config.enquiryMode !== 'netlify') {
+      const data = new FormData(booking);
+      const body = ['Name: ' + data.get('name'), 'Email: ' + data.get('email'),
+        'Phone: ' + data.get('phone'), 'Plan: ' + (data.get('requested-plan') || ''),
+        'Interest: ' + data.get('interest'), '', data.get('message') || ''].join('\n');
+      location.href = 'mailto:contact@qveewellness.com?subject=' +
+        encodeURIComponent('QVee Wellness enquiry') + '&body=' + encodeURIComponent(body);
+      note.textContent = 'Your email app will open with a draft. Send it to submit your enquiry. If it does not open, email contact@qveewellness.com directly. This does not reserve a class.';
+      return;
+    }
     const submit = $('button[type="submit"]', booking);
     const payload = new URLSearchParams(new FormData(booking));
     if (payload.get('company-website')) return;
