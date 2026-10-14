@@ -772,13 +772,13 @@ section[id], [id] { scroll-margin-top: 92px; }
 .plan-stage__image::after { content:''; position:absolute; inset:45% 0 0; background:linear-gradient(transparent,rgba(23,18,16,.65)); }
 .plan-stage__image figcaption { position:absolute; left:35px; right:35px; bottom:35px; z-index:1; color:var(--cream); font:italic 2rem/1.15 var(--font-display); max-width:20ch; }
 .is-enhanced:not(.is-comparing) .plans-grid { display:block; }
-.is-enhanced:not(.is-comparing) .plan { height:100%; min-height:480px; padding:48px clamp(28px,4vw,64px) 35px; border:0; animation:plan-enter .3s ease-out both; }
+.is-enhanced:not(.is-comparing) .plan { height:100%; min-height:480px; padding:48px clamp(28px,4vw,64px) 35px; border:0; animation:none; }
 .is-enhanced:not(.is-comparing) .plan h3 { font-size:2.8rem; margin-bottom:20px; }
 .is-enhanced:not(.is-comparing) .plan__amount { font-size:clamp(3.7rem,5.5vw,5.4rem); }
 .is-enhanced:not(.is-comparing) .plan__benefits { display:grid; align-content:start; gap:0; margin-top:16px; margin-bottom:22px; }
 .is-enhanced:not(.is-comparing) .plan__benefits li { margin:5px 0; }
 .is-enhanced:not(.is-comparing) .plan__action { font-size:.68rem; padding:20px; }
-.is-enhanced.is-comparing .plans-grid { animation:plan-enter .3s ease-out both; }
+.is-enhanced.is-comparing .plans-grid { animation:none; }
 @keyframes plan-enter { from { opacity:.4; transform:translateY(7px); } to { opacity:1; transform:none; } }
 @media(max-width:1000px) { .plan-picker { flex-wrap:wrap; } .plan-picker__intro { flex-basis:100%; } .compare-plans { margin-left:auto; } }
 @media(max-width:650px) { .is-enhanced:not(.is-comparing) .plan-stage { grid-template-columns:1fr; } .is-enhanced:not(.is-comparing) .plan-stage__image { min-height:170px; max-height:170px; } .plan-stage__image figcaption { font-size:1.55rem; bottom:22px; left:24px; max-width:26ch; } .is-enhanced:not(.is-comparing) .plan { min-height:460px; padding:44px 26px 26px; } .visit-options { width:100%; display:grid; grid-template-columns:repeat(4,1fr); } .visit-option { min-width:0; min-height:70px; } .compare-plans { margin-left:0; } .plan-picker { gap:14px; } .plan-switch { margin-bottom:40px; width:100%; } .plan-switch a { flex:1; } }
@@ -857,3 +857,12 @@ body.menu-open .menu-toggle span:last-child { transform:translateY(-5px) rotate(
 /* Anchor destinations remain below both navigation rows. */
 main [id] { scroll-margin-top:105px; }
 @media(max-width:1000px) { main [id] { scroll-margin-top:150px; } }
+
+/* Quiet tax labels; stable rendering while resizing or docking DevTools. */
+.plan__amount .vat-label { font:400 .8rem var(--font-sans); letter-spacing:0; color:var(--stone); white-space:nowrap; }
+.plan--premium .plan__amount .vat-label,.home-plan--dark .plan__amount .vat-label { color:var(--sand-2); }
+.visit-option b .vat-label { display:block; margin-top:4px; font-size:.6rem; line-height:1.2; }
+.header,.header.is-scrolled { background:var(--ivory); -webkit-backdrop-filter:none; backdrop-filter:none; transition:box-shadow .2s; }
+body.menu-open .header { background:var(--ink); }
+.grain { display:none; }
+@media(max-width:1000px) { .cursor { display:none !important; } }

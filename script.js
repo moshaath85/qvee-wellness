@@ -196,16 +196,18 @@
   const label = $('.cursor__label', cursor);
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (fine && cursor && !reduce) {
-    let cx = window.innerWidth / 2, cy = window.innerHeight / 2, tx = cx, ty = cy;
-    window.addEventListener('mousemove', (e) => {
-      tx = e.clientX; ty = e.clientY;
-      cursor.style.opacity = '1';
+    // Render only on pointer movement instead of repainting every animation frame.
+    let cursorFrame = 0;
+    let pointerX = 0, pointerY = 0;
+    window.addEventListener('mousemove', (event) => {
+      pointerX = event.clientX; pointerY = event.clientY;
+      if (cursorFrame || window.innerWidth <= 1000) return;
+      cursorFrame = requestAnimationFrame(() => {
+        cursor.style.opacity = '1';
+        cursor.style.transform = 'translate(' + pointerX + 'px,' + pointerY + 'px) translate(-50%,-50%)';
+        cursorFrame = 0;
+      });
     }, { passive: true });
-    (function loop() {
-      cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18;
-      cursor.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
-      requestAnimationFrame(loop);
-    })();
     const bindHover = () => {
       $$('[data-cursor]').forEach((el) => {
         const type = el.getAttribute('data-cursor');

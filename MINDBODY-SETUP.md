@@ -12,6 +12,8 @@ Without a configured URL, plan buttons open an email enquiry and the schedule se
 
 Public configuration contains URLs only. Never put API keys, credentials or client data in this file.
 
-Still to confirm with the studio: package validity; applicable taxes; Guest Pass quantity/conditions; how yoga access uses credits; monthly renewal rules; freeze notice and per-year limits. The site does not invent these terms.
+Prices on the site exclude VAT. Match this treatment in Mindbody before launch.
+
+Still to confirm with the studio: package validity; Guest Pass quantity/conditions; how yoga access uses credits; monthly renewal rules; freeze notice and per-year limits. The site does not invent these terms.
 
 If using embedded widgets instead of links later, update CSP only for the exact origins supplied by Mindbody and test the embedded booking flow. Mindbody feature availability depends on the purchased subscription.
