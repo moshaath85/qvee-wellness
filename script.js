@@ -373,7 +373,10 @@
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      const top = target.getBoundingClientRect().top + window.scrollY - 70;
+      const quickNav = $('.mobile-nav');
+      const quickNavHeight = quickNav && getComputedStyle(quickNav).display !== 'none' ? quickNav.getBoundingClientRect().height : 0;
+      const offset = (header ? header.getBoundingClientRect().height : 0) + quickNavHeight + 20;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
     });
   });
