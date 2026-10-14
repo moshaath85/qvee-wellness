@@ -20,24 +20,43 @@
     });
   }
 
-  /* ---------- A short branded welcome; never artificial percentages ---------- */
+  /* ---------- The brand mark is the asset-readiness meter ---------- */
   const preloader = $('#preloader');
   const startHero = () => {
     document.body.classList.add('hero-in');
     requestAnimationFrame(revealHero);
   };
   if (preloader && document.documentElement.classList.contains('has-brand-intro')) {
+    const progress = $('#brandProgress');
+    const value = $('#brandProgressValue');
     const firstImage = $('.hero__slide.is-active img');
+    const logoImage = $('.brand-intro__fill img');
     const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-    const ready = Promise.allSettled([
-      firstImage && firstImage.decode ? firstImage.decode() : Promise.resolve(),
-      document.fonts ? document.fonts.ready : Promise.resolve()
-    ]);
-    Promise.all([delay(700), Promise.race([ready, delay(1800)])]).then(() => {
+    const imageReady = (image) => image && image.decode ? image.decode() : Promise.resolve();
+    const assets = [imageReady(firstImage), imageReady(logoImage), document.fonts ? document.fonts.ready : Promise.resolve()].map((asset) => Promise.resolve(asset).catch(() => undefined));
+    let completed = 0;
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
       document.documentElement.classList.remove('has-brand-intro');
+      preloader.setAttribute('aria-hidden', 'true');
       startHero();
-      setTimeout(() => preloader.remove(), 650);
+      setTimeout(() => preloader.remove(), 550);
+    };
+    const track = (asset) => Promise.resolve(asset).catch(() => undefined).then(() => {
+      if (finished) return;
+      completed += 1;
+      const percent = Math.round(completed / assets.length * 100);
+      progress.style.setProperty('--load-progress', percent + '%');
+      progress.setAttribute('aria-valuenow', String(percent));
+      value.textContent = percent + '%';
     });
+    requestAnimationFrame(() => {
+      const ready = Promise.all(assets.map(track));
+      Promise.all([delay(650), Promise.race([ready, delay(2200)])]).then(finish);
+    });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') finish(); }, { once: true });
   } else {
     if (preloader) preloader.remove();
     startHero();
@@ -210,44 +229,6 @@
     applyParallax();
   }
 
-  /* ---------- Custom cursor ---------- */
-  const cursor = $('#cursor');
-  const label = $('.cursor__label', cursor);
-  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (fine && cursor && !reduce) {
-    // Render only on pointer movement instead of repainting every animation frame.
-    let cursorFrame = 0;
-    let pointerX = 0, pointerY = 0;
-    window.addEventListener('mousemove', (event) => {
-      pointerX = event.clientX; pointerY = event.clientY;
-      if (cursorFrame || window.innerWidth <= 1000) return;
-      cursorFrame = requestAnimationFrame(() => {
-        cursor.style.opacity = '1';
-        cursor.style.transform = 'translate(' + pointerX + 'px,' + pointerY + 'px) translate(-50%,-50%)';
-        cursorFrame = 0;
-      });
-    }, { passive: true });
-    const bindHover = () => {
-      $$('[data-cursor]').forEach((el) => {
-        const type = el.getAttribute('data-cursor');
-        el.addEventListener('mouseenter', () => {
-          cursor.classList.remove('is-hover', 'is-view');
-          if (type === 'view') { cursor.classList.add('is-view'); label.textContent = 'View'; }
-          else cursor.classList.add('is-hover');
-        });
-        el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover', 'is-view'));
-      });
-      $$('a, button, input, textarea, select').forEach((el) => {
-        if (el.hasAttribute('data-cursor')) return;
-        el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
-      });
-    };
-    bindHover();
-  } else if (cursor) {
-    cursor.style.display = 'none';
-  }
-
   /* ---------- Mobile menu ---------- */
   const menu = $('#menu');
   const toggle = $('#menuToggle');
@@ -325,8 +306,8 @@
     planLinks.forEach((link) => {
       const active = link.hash === '#' + id;
       link.classList.toggle('is-active', active);
-      if (active) link.setAttribute('aria-current', 'location');
-      else link.removeAttribute('aria-current');
+      link.setAttribute('aria-selected', String(active));
+      link.tabIndex = active ? 0 : -1;
     });
   };
   planGroups.forEach((group) => {
@@ -342,16 +323,26 @@
     const render = (announce) => {
       group.classList.toggle('is-comparing', comparing);
       cards.forEach((card, index) => { card.hidden = !comparing && index !== selected; });
-      buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selected)));
+      buttons.forEach((button, index) => {
+        button.setAttribute('aria-checked', String(index === selected));
+        button.tabIndex = index === selected ? 0 : -1;
+      });
       compare.setAttribute('aria-expanded', String(comparing));
       compare.innerHTML = comparing ? 'Back to my selection <span aria-hidden="true">↙</span>' : 'Compare prices & benefits <span aria-hidden="true">↗</span>';
       if (announce && selectionStatus) selectionStatus.textContent =
         $('h3', cards[selected]).textContent + ', ' + $('.plan__amount', cards[selected]).textContent.trim() +
         ', ' + $('.plan__rate', cards[selected]).textContent.trim();
     };
-    buttons.forEach((button, index) => button.addEventListener('click', () => {
-      selected = index; comparing = false; render(true);
-    }));
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => { selected = index; comparing = false; render(true); });
+      button.addEventListener('keydown', (event) => {
+        const delta = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+        if (!delta && event.key !== 'Home' && event.key !== 'End') return;
+        event.preventDefault();
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + delta + buttons.length) % buttons.length;
+        selected = next; comparing = false; render(true); buttons[next].focus();
+      });
+    });
     compare.addEventListener('click', () => { comparing = !comparing; render(false); });
     picker.hidden = false;
     group.classList.add('is-enhanced');
@@ -363,6 +354,15 @@
       event.preventDefault();
       selectCategory(link.hash.slice(1));
       history.replaceState(null, '', link.hash);
+    }));
+    planLinks.forEach((link, index) => link.addEventListener('keydown', (event) => {
+      const delta = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+      if (!delta && event.key !== 'Home' && event.key !== 'End') return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? planLinks.length - 1 : (index + delta + planLinks.length) % planLinks.length;
+      selectCategory(planLinks[next].hash.slice(1));
+      history.replaceState(null, '', planLinks[next].hash);
+      planLinks[next].focus();
     }));
     window.addEventListener('hashchange', () => selectCategory(location.hash.slice(1)));
     // Links below the chooser can reveal the other category before scrolling.
