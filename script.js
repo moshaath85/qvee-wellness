@@ -36,9 +36,11 @@
     const assets = [imageReady(firstImage), imageReady(logoImage), document.fonts ? document.fonts.ready : Promise.resolve()].map((asset) => Promise.resolve(asset).catch(() => undefined));
     let completed = 0;
     let finished = false;
+    const skipIntro = (event) => { if (event.key === 'Escape') finish(); };
     const finish = () => {
       if (finished) return;
       finished = true;
+      document.removeEventListener('keydown', skipIntro);
       document.documentElement.classList.remove('has-brand-intro');
       preloader.setAttribute('aria-hidden', 'true');
       startHero();
@@ -56,7 +58,7 @@
       const ready = Promise.all(assets.map(track));
       Promise.all([delay(650), Promise.race([ready, delay(2200)])]).then(finish);
     });
-    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') finish(); }, { once: true });
+    document.addEventListener('keydown', skipIntro);
   } else {
     if (preloader) preloader.remove();
     startHero();

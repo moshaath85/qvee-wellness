@@ -940,3 +940,12 @@ p { text-wrap:pretty; }
 @media(max-width:1000px) { .policy-hero { padding-top:180px; } .policy-layout { grid-template-columns:170px minmax(0,1fr); gap:35px; } }
 @media(max-width:650px) { .hero__tagline { font-size:clamp(2.8rem,11.5vw,3.5rem); } .pricing-hero__copy .display { font-size:2.9rem; } .pricing-hero__grid { gap:30px; } .pricing-hero__image img { aspect-ratio:16/8; } .plan-group__heading > p { margin-top:12px; } .plan-switch { padding:5px; } .plan-switch a { font-size:.82rem; padding:12px 8px; } .plan-picker { gap:18px; } .visit-option { min-height:116px; } .visit-option small { font-size:.61rem; } .visit-option b { font-size:.68rem; } .is-enhanced:not(.is-comparing) .plan-stage { grid-template-columns:1fr; } .is-enhanced:not(.is-comparing) .plan-stage__image { min-height:130px; max-height:130px; } .plan-stage__image figcaption { font:400 .8rem var(--font-sans); } .is-enhanced:not(.is-comparing) .plan { padding:38px 23px 25px; } .is-enhanced:not(.is-comparing) .plan h3 { font-size:2.5rem; } .plan__period { display:inline-block; margin-left:4px; } .policy-layout { display:block; } .policy-layout aside { display:grid; grid-template-columns:repeat(3,1fr); position:static; margin-bottom:40px; gap:8px; } .policy-layout aside .eyebrow { grid-column:1/-1; } .policy-layout aside strong { font-size:1.7rem; } .policy-layout aside p:not(.eyebrow) { grid-row:3; } .policy-content { padding-top:40px; } .policy-sections h2 { font-size:1.8rem; } .policy-jumps a { font-size:.75rem; } }
 @media(prefers-reduced-motion:reduce) { .brand-intro__fill { transition:none; } }
+
+/* Keep informational text readable on both light and dark sections. */
+.perk-grid p { color:var(--stone); }
+.perk-grid > div { border-color:var(--line); }
+.section--dark .perk-grid p { color:var(--sand-2); }
+.section--dark .perk-grid > div { border-color:var(--line-lt); }
+.journey-cta:not(.section--dark) p { color:var(--stone); }
+@media(min-width:800px) { .is-enhanced:not(.is-comparing) .plan__benefits { grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:24px; } }
+@media(max-width:650px) { .is-enhanced:not(.is-comparing) .plan-stage__image { min-height:96px; max-height:96px; } }
