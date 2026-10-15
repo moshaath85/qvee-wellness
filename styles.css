@@ -949,3 +949,5 @@ p { text-wrap:pretty; }
 .journey-cta:not(.section--dark) p { color:var(--stone); }
 @media(min-width:800px) { .is-enhanced:not(.is-comparing) .plan__benefits { grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:24px; } }
 @media(max-width:650px) { .is-enhanced:not(.is-comparing) .plan-stage__image { min-height:96px; max-height:96px; } }
+
+@media(max-width:650px) { #packages .visit-options { display:flex; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x proximity; } #packages .visit-option { flex:0 0 calc((100% - 27px)/4); scroll-snap-align:start; } }

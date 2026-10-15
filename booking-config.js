@@ -4,7 +4,7 @@ window.QVEE_BOOKING = {
   // Switch to 'netlify' only after enabling form detection and testing receipt.
   enquiryMode: 'email',
   plans: {
-    solo: '', three: '', five: '', ten: '',
+    solo: '', three: '', five: '', ten: '', fifty: '',
     'month-four': '', 'month-eight': '', 'month-twelve': '', 'month-twenty': ''
   }
 };
