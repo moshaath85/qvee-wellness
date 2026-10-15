@@ -393,7 +393,7 @@
       $('#formNote').textContent = 'Your enquiry is sent to the studio via Netlify Forms. Please do not include medical or payment details. This does not confirm a booking.';
     }
     const key = new URLSearchParams(location.search).get('plan');
-    const planNames = { 'private-1': 'Private · 1 class · AED 420 + VAT', 'private-4': 'Private · 4 classes · AED 1,640 + VAT', 'private-8': 'Private · 8 classes · AED 3,120 + VAT', 'mini-group-1': 'Mini-group · 1 class · AED 390 + VAT for 2–3 people', 'mini-group-4': 'Mini-group · 4 classes · AED 1,520 + VAT for 2–3 people', 'mini-group-8': 'Mini-group · 8 classes · AED 3,000 + VAT for 2–3 people', solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package', fifty: '50-visit package · 90 days · AED 4,750 + VAT',
+    const planNames = { 'private-10': 'Private · 10 classes · AED 3,600 + VAT', 'private-1': 'Private · 1 class · AED 420 + VAT', 'private-4': 'Private · 4 classes · AED 1,640 + VAT', 'private-8': 'Private · 8 classes · AED 3,120 + VAT', 'mini-group-1': 'Mini-group · 1 class · AED 390 + VAT for 2–3 people', 'mini-group-4': 'Mini-group · 4 classes · AED 1,520 + VAT for 2–3 people', 'mini-group-8': 'Mini-group · 8 classes · AED 3,000 + VAT for 2–3 people', solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package', fifty: '50-visit package · 90 days · AED 4,750 + VAT',
       'month-four': '4 Visits / Month', 'month-eight': '8 Visits / Month',
       'month-twelve': '12 Visits / Month', 'month-twenty': '20 Visits / Month' };
     if (planNames[key]) {
