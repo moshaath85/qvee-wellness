@@ -981,3 +981,6 @@ p { text-wrap:pretty; }
 /* Keep the full yoga posture visible in the plan photography. */
 .plan-stage__image img { object-position:center; }
 @media(max-width:650px) { .is-enhanced:not(.is-comparing) .plan-stage__image { min-height:0; max-height:none; aspect-ratio:4/5; } }
+
+.plan__photo { display:block; width:100%; aspect-ratio:4/5; object-fit:cover; margin-bottom:24px; }
+.is-enhanced:not(.is-comparing) .plan__photo { display:none; }

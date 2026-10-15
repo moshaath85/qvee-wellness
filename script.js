@@ -325,6 +325,14 @@
     if (!picker || !compare || cards.length !== buttons.length) return;
     const render = (announce) => {
       group.classList.toggle('is-comparing', comparing);
+      const stageImage = $('.plan-stage__image img', group);
+      const selectedPhoto = $('.plan__photo', cards[selected]);
+      if (stageImage && selectedPhoto && stageImage.getAttribute('src') !== selectedPhoto.getAttribute('src')) {
+        stageImage.src = selectedPhoto.getAttribute('src');
+        stageImage.alt = selectedPhoto.alt;
+        stageImage.width = selectedPhoto.width;
+        stageImage.height = selectedPhoto.height;
+      }
       cards.forEach((card, index) => { card.hidden = !comparing && index !== selected; });
       buttons.forEach((button, index) => {
         button.setAttribute('aria-checked', String(index === selected));
