@@ -117,7 +117,7 @@ async function rewriteHtml(pages, assets) {
     const file = path.join(ROOT, rel);
     let html = await readFile(file, 'utf8');
     const before = html;
-    html = html.replace(/https:\/\/(?:www\.)?qveewellness\.com|https:\/\/qvee-wellness\.netlify\.app/g, SITE_ORIGIN);
+    html = html.replace(/https:\/\/(?:www\.)?qveewellness\.com|https:\/\/qvee-wellness\.(?:netlify\.app|pages\.dev)/g, SITE_ORIGIN);
 
     if (assets.styles) {
       html = html.replace(
@@ -232,7 +232,7 @@ async function run() {
   for (const file of ['sitemap.xml', 'robots.txt']) {
     const filePath = path.join(ROOT, file);
     const value = await readFile(filePath, 'utf8');
-    await writeFile(filePath, value.replace(/https:\/\/(?:www\.)?qveewellness\.com|https:\/\/qvee-wellness\.netlify\.app/g, SITE_ORIGIN));
+    await writeFile(filePath, value.replace(/https:\/\/(?:www\.)?qveewellness\.com|https:\/\/qvee-wellness\.(?:netlify\.app|pages\.dev)/g, SITE_ORIGIN));
   }
   const changed = await rewriteHtml(pages, assets);
   const sw = await writeServiceWorker(pages, assets);

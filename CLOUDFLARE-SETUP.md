@@ -14,4 +14,4 @@ The enquiry form continues to prepare an email draft. Mindbody is pending. Netli
 
 Upload only `dist`, never the repository or `.project-notes`. Direct Upload supports a ZIP of the contents of `dist`. Git integration is preferred for automatic publishing of future commits.
 
-Deployment has not yet been completed: the accessible Cloudflare dashboard is returning an application error. Confirm the account and project before claiming the site is live.
+Production is live at https://qvee-wellness.pages.dev. Cloudflare Pages is connected to GitHub main with npm run build:cloudflare and dist output. SITE_URL is set to the production Pages origin. The Chrome session provided access to the correct account. Private and mini-group sections were verified on the live page and screenshots saved privately.

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://qvee-wellness.netlify.app/sitemap.xml
+Sitemap: https://qvee-wellness.pages.dev/sitemap.xml
