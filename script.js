@@ -360,7 +360,9 @@
     render(false);
   });
   if (planLinks.length) {
-    selectCategory(location.hash === '#monthly' ? 'monthly' : 'packages');
+    const initialPlan = new URLSearchParams(location.search).get('plan') || '';
+    const initialCategory = location.hash.slice(1);
+    selectCategory(planGroups.some((group) => group.id === initialCategory) ? initialCategory : initialPlan.startsWith('private-') ? 'private' : initialPlan.startsWith('mini-group-') ? 'mini-group' : initialPlan.startsWith('month-') ? 'monthly' : 'packages');
     planLinks.forEach((link) => link.addEventListener('click', (event) => {
       event.preventDefault();
       selectCategory(link.hash.slice(1));

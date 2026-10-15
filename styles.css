@@ -999,3 +999,11 @@ p { text-wrap:pretty; }
 .session-plan__rate { font-size:.9rem; line-height:1.7; padding-top:20px; border-top:1px solid var(--line); margin-bottom:28px; }
 .session-plan .btn { width:100%; font-size:.68rem; padding-left:12px; padding-right:12px; }
 @media(max-width:760px) { .personal-training__heading { display:block; } .personal-training__heading > p { margin-top:18px; } .session-plans { grid-template-columns:1fr; } .session-plan { padding:28px; } }
+
+/* One consistent category switch for all pricing. */
+.plan-switch { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:min(100%,900px); }
+.plan-switch a { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:4px; padding:16px 18px; text-align:center; }
+.plan-switch a small { font-size:.68rem; font-weight:400; line-height:1.3; }
+.personal-training.plan-group { border:0; padding:0; margin:0; }
+.personal-training.plan-group[hidden] { display:none; }
+@media(max-width:650px) { .plan-switch { grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px; } .plan-switch a { padding:14px 8px; min-height:64px; font-size:.82rem; } .personal-training__heading .display { font-size:2.5rem; } }
