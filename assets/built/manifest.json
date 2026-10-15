@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T19:21:26.566Z",
+  "generatedAt": "2026-10-15T19:24:09.588Z",
   "assets": {
     "styles.css": "/assets/built/styles.FZFOFRT7.css",
     "script.js": "/assets/built/script.5RCTYZWR.js"
@@ -9,7 +9,7 @@
     "script.js": "/assets/built/script.5RCTYZWR.js.map"
   },
   "serviceWorker": {
-    "version": "cfdf4368e5",
+    "version": "a5146116b3",
     "count": 18
   },
   "bytes": {
