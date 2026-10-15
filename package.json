@@ -2,13 +2,14 @@
   "name": "qvee-wellness",
   "version": "1.0.0",
   "private": true,
-  "description": "QVee Wellness — women-only luxury Pilates & wellness studio in Sobha Hartland, Dubai",
+  "description": "QVee Wellness \u2014 women-only luxury Pilates & wellness studio in Sobha Hartland, Dubai",
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
     "watch": "node build.mjs --watch",
     "start": "node server.mjs",
-    "dev": "node server.mjs --port 8913"
+    "dev": "node server.mjs --port 8913",
+    "build:cloudflare": "node cloudflare-build.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.28.2"
