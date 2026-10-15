@@ -1007,3 +1007,5 @@ p { text-wrap:pretty; }
 .personal-training.plan-group { border:0; padding:0; margin:0; }
 .personal-training.plan-group[hidden] { display:none; }
 @media(max-width:650px) { .plan-switch { grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px; } .plan-switch a { padding:14px 8px; min-height:64px; font-size:.82rem; } .personal-training__heading .display { font-size:2.5rem; } }
+
+@media(max-width:650px) { .personal-training .visit-options { grid-template-columns:repeat(3,minmax(0,1fr)); } }
