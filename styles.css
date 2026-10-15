@@ -951,3 +951,13 @@ p { text-wrap:pretty; }
 @media(max-width:650px) { .is-enhanced:not(.is-comparing) .plan-stage__image { min-height:96px; max-height:96px; } }
 
 @media(max-width:650px) { #packages .visit-options { display:flex; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x proximity; } #packages .visit-option { flex:0 0 calc((100% - 27px)/4); scroll-snap-align:start; } }
+
+/* Featured choices: restrained gold detail, with a brief entrance highlight. */
+.visit-option--featured { position:relative; border-color:var(--gold); box-shadow:inset 0 0 0 1px var(--gold); }
+.visit-option__badge { position:absolute; top:-11px; left:50%; transform:translateX(-50%); white-space:nowrap; padding:4px 7px; background:var(--gold); color:var(--espresso); font:500 9px/1.2 var(--font-body); letter-spacing:.04em; border-radius:2px; z-index:1; }
+.visit-option--featured::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.2) 48%,transparent 75%); background-size:250% 100%; animation:featured-glint 2.6s ease-out 2; }
+.visit-option--featured[aria-checked="true"] { border-color:var(--gold); }
+.plan--featured .plan__badge { background:var(--gold); color:var(--espresso); }
+@keyframes featured-glint { from { background-position:180% 0; } to { background-position:-80% 0; } }
+@media(max-width:650px) { #packages .visit-options { padding-top:14px; } .visit-option__badge { font-size:8px; padding:4px 5px; } }
+@media(prefers-reduced-motion:reduce) { .visit-option--featured::after { animation:none; display:none; } }

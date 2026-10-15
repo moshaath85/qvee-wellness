@@ -319,7 +319,8 @@
     const compare = $('.compare-plans', group);
     const requestedPlan = new URLSearchParams(location.search).get('plan');
     const requestedIndex = cards.findIndex((card) => $('[data-plan]', card).dataset.plan === requestedPlan);
-    let selected = requestedIndex >= 0 ? requestedIndex : 0;
+    const featuredIndex = buttons.findIndex((button) => button.classList.contains('visit-option--featured'));
+    let selected = requestedIndex >= 0 ? requestedIndex : Math.max(0, featuredIndex);
     let comparing = false;
     if (!picker || !compare || cards.length !== buttons.length) return;
     const render = (announce) => {
