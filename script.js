@@ -374,6 +374,47 @@
     });
   }
 
+  /* ---------- Membership duration and transparent totals ---------- */
+  const durationPicker = $('.membership-duration');
+  if (durationPicker) {
+    const monthly = $('#monthly');
+    const cards = $$('.plan', monthly);
+    const choices = $$('.visit-option', monthly);
+    const bases = [680, 1280, 1680, 2600];
+    const visits = [4, 8, 12, 20];
+    const money = (amount) => amount.toLocaleString('en-AE', { maximumFractionDigits: 2 });
+    const params = new URLSearchParams(location.search);
+    const requestedDuration = params.get('duration');
+    if (['1', '3', '6'].includes(requestedDuration)) {
+      $('input[value="' + requestedDuration + '"]', durationPicker).checked = true;
+    }
+    const updateDuration = () => {
+      const months = Number($('input:checked', durationPicker).value);
+      const discount = months === 3 ? 0.05 : months === 6 ? 0.10 : 0;
+      cards.forEach((card, index) => {
+        const price = Math.round(bases[index] * (1 - discount) * 100) / 100;
+        const total = Math.round(price * months * 100) / 100;
+        $('.plan__amount', card).innerHTML = '<span>AED</span> ' + money(price) + ' <small class="vat-label">+ VAT</small>';
+        $('.plan__unit', card).textContent = 'Per month · ' + months + '-month membership';
+        $('.plan__rate', card).innerHTML = 'AED ' + money(price / visits[index]) + ' + VAT <span>per visit</span>';
+        let summary = $('.plan__commitment', card);
+        if (!summary) { summary = document.createElement('p'); summary.className = 'plan__commitment'; $('.plan__unit', card).after(summary); }
+        summary.innerHTML = '<strong>AED ' + money(total) + ' + VAT total for ' + months + (months === 1 ? ' month' : ' months') + '</strong>' + (discount ? '<br>Save AED ' + money(bases[index] * months - total) + ' (' + Math.round(discount * 100) + '%)' : '');
+        $('b', choices[index]).innerHTML = 'AED ' + money(price) + '<small class="vat-label">+ VAT / month</small>';
+        const action = $('[data-plan]', card);
+        const key = action.dataset.plan;
+        const bookingKey = months === 1 ? key : key + '-' + months + 'm';
+        const url = safeBookingUrl(config.plans && config.plans[bookingKey]);
+        action.href = url || 'visit.html?plan=' + encodeURIComponent(key) + '&duration=' + months + '#book';
+        $('span', action).textContent = url ? 'Buy This Plan' : 'Enquire About This Plan';
+      });
+      if (selectionStatus) selectionStatus.textContent = months + '-month membership selected' + (discount ? ', save ' + Math.round(discount * 100) + '%' : '');
+    };
+    durationPicker.hidden = false;
+    durationPicker.addEventListener('change', updateDuration);
+    updateDuration();
+  }
+
   /* ---------- Netlify-managed enquiries ---------- */
   const booking = $('#bookingForm');
   if (booking) {
@@ -385,6 +426,10 @@
     const planNames = { solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package',
       'month-four': '4 Visits / Month', 'month-eight': '8 Visits / Month',
       'month-twelve': '12 Visits / Month', 'month-twenty': '20 Visits / Month' };
+    const duration = new URLSearchParams(location.search).get('duration');
+    if (planNames[key] && key.startsWith('month-') && ['1', '3', '6'].includes(duration)) {
+      planNames[key] += ' · ' + duration + '-month membership' + (duration === '3' ? ' · 5% discount' : duration === '6' ? ' · 10% discount' : '');
+    }
     if (planNames[key]) {
       $('#requestedPlan').value = planNames[key];
       $('#selectedPlan').textContent = 'Your selected plan: ' + planNames[key];
