@@ -977,3 +977,7 @@ p { text-wrap:pretty; }
   #packages .visit-option { flex-basis:calc((100% - 18px)/3.3); }
   .visit-option > b { font-size:.72rem; }
 }
+
+/* Keep the full yoga posture visible in the plan photography. */
+.plan-stage__image img { object-position:center; }
+@media(max-width:650px) { .is-enhanced:not(.is-comparing) .plan-stage__image { min-height:0; max-height:none; aspect-ratio:4/5; } }
