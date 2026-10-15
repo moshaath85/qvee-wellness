@@ -984,3 +984,18 @@ p { text-wrap:pretty; }
 
 .plan__photo { display:block; width:100%; aspect-ratio:4/5; object-fit:cover; margin-bottom:24px; }
 .is-enhanced:not(.is-comparing) .plan__photo { display:none; }
+
+.session-links { display:flex; justify-content:center; flex-wrap:wrap; gap:16px 28px; margin-bottom:28px; font-size:.85rem; color:var(--gold-ink); }
+.session-links a { text-decoration:underline; text-underline-offset:5px; }
+.personal-training { border-top:1px solid var(--line); scroll-margin-top:140px; }
+.personal-training__heading { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:36px; }
+.personal-training__heading > p { max-width:36ch; color:var(--stone); line-height:1.8; }
+.session-plans { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.session-plan { padding:32px; border:1px solid var(--line); background:var(--cream); }
+.session-plan h3 { font:400 2.4rem/1.2 var(--font-display); margin:16px 0 24px; }
+.session-plan__price { font:400 clamp(2.5rem,4vw,3.8rem)/1.2 var(--font-display); }
+.session-plan__price small { font:400 .8rem/1.4 var(--font-sans); white-space:nowrap; }
+.session-plan__unit { font-size:.85rem; color:var(--stone); margin:10px 0 24px; }
+.session-plan__rate { font-size:.9rem; line-height:1.7; padding-top:20px; border-top:1px solid var(--line); margin-bottom:28px; }
+.session-plan .btn { width:100%; font-size:.68rem; padding-left:12px; padding-right:12px; }
+@media(max-width:760px) { .personal-training__heading { display:block; } .personal-training__heading > p { margin-top:18px; } .session-plans { grid-template-columns:1fr; } .session-plan { padding:28px; } }
