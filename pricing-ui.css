@@ -1,0 +1,128 @@
+/* QVee pricing: one scale for every category and viewport. */
+.pricing-page { --price-surface:#F4EFE9; }
+.pricing-page main { font-size:16px; line-height:1.65; }
+.pricing-page main .wrap { width:calc(100% - 48px); max-width:1160px; padding-inline:0; }
+.pricing-page .section { padding:72px 0; }
+.pricing-page .display { font-size:clamp(36px,4vw,56px); line-height:1.08; }
+.pricing-page .eyebrow { font-size:11px; line-height:1.5; letter-spacing:.14em; }
+.pricing-hero { padding:156px 0 64px; }
+.pricing-hero__grid { display:grid; grid-template-columns:1.15fr .85fr; align-items:center; gap:64px; }
+.pricing-hero__copy .display { font-size:clamp(42px,5vw,64px); }
+.pricing-hero__copy .body { margin:24px 0; max-width:46ch; }
+.pricing-hero__image { margin:0; }
+.pricing-hero__image img { width:100%; height:360px; object-fit:cover; object-position:center 45%; }
+.pricing-hero__image figcaption { font-size:13px; color:var(--stone); margin-top:10px; }
+.pricing-page #plans { scroll-margin-top:110px; }
+.pricing-page #plans > .wrap > .section-head { margin-bottom:32px; }
+.plan-switch { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px; padding:5px; border:1px solid var(--line); background:var(--ivory); margin:32px 0 40px; }
+.plan-switch a { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:64px; padding:12px; font-size:15px; line-height:1.35; text-align:center; border-radius:2px; }
+.plan-switch a small { font-size:12px; line-height:1.3; margin-top:3px; }
+.plan-switch a.is-active { background:var(--espresso); color:var(--ivory); }
+.plan-group { margin:0; padding:0; border:0; scroll-margin-top:140px; }
+.plan-group__heading { display:flex; justify-content:space-between; align-items:end; gap:32px; margin-bottom:24px; }
+.plan-group__heading .display { font-size:36px; }
+.plan-group__heading .eyebrow { margin-bottom:10px; }
+.plan-group__heading > p { max-width:38ch; color:var(--stone); font-size:15px; }
+.plan-picker { display:grid; grid-template-columns:1fr auto; gap:18px; padding:24px 0; margin-bottom:24px; border-block:1px solid var(--line); }
+.plan-picker__intro { grid-column:1/-1; }
+.plan-picker__intro .eyebrow { display:block; margin-bottom:5px; }
+.plan-picker__intro p { font-size:14px; color:var(--stone); }
+.visit-options { display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); gap:10px; min-width:0; }
+.visit-option { position:relative; display:grid; grid-template-rows:20px 32px 20px 44px; align-items:center; justify-items:center; gap:4px; min-width:0; padding:12px 8px; background:var(--ivory); color:var(--espresso); border:1px solid var(--line); border-radius:3px; }
+.visit-option > span { grid-row:2; font:400 30px/1 var(--font-display); }
+.visit-option > small { grid-row:3; font:400 12px/1.3 var(--font-sans); white-space:nowrap; }
+.visit-option > b { grid-row:4; display:flex; flex-direction:column; align-items:center; gap:3px; font:500 13px/1.3 var(--font-sans); white-space:nowrap; }
+.visit-option .vat-label { font:400 11px/1.3 var(--font-sans); margin:0; color:inherit; }
+.visit-option[aria-checked="true"] { background:var(--espresso); color:var(--ivory); border-color:var(--espresso); }
+.visit-option--featured { border-color:var(--gold); }
+.visit-option .visit-option__badge { grid-row:1; position:static; padding:3px 6px; transform:none; white-space:nowrap; border-radius:2px; background:var(--gold); color:var(--espresso); font:500 10px/1.3 var(--font-sans); letter-spacing:0; }
+.compare-plans { align-self:center; padding:12px; min-height:44px; font:400 14px/1.4 var(--font-sans); color:var(--gold-ink); text-decoration:underline; text-underline-offset:5px; }
+.compare-plans span { margin-left:5px; }
+.plan-stage__image { display:none; }
+.plan-group.is-enhanced:not(.is-comparing) .plan-stage { display:grid; grid-template-columns:.9fr 1.1fr; border:1px solid var(--line); background:var(--ivory); }
+.plan-group.is-enhanced:not(.is-comparing) .plan-stage__image { display:block; position:relative; margin:0; min-height:0; overflow:hidden; background:var(--sand); }
+.plan-stage__image img { position:absolute; width:100%; height:100%; inset:0; object-fit:cover; object-position:center; }
+.plan-stage__image figcaption { position:absolute; bottom:16px; left:16px; right:16px; padding:8px 12px; width:fit-content; background:rgba(244,239,233,.94); color:var(--espresso); font:400 12px/1.4 var(--font-sans); }
+.plans-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.plan-group.is-enhanced:not(.is-comparing) .plans-grid { display:block; min-width:0; }
+.plan { display:flex; flex-direction:column; position:relative; min-width:0; padding:28px; border:1px solid var(--line); background:var(--ivory); color:var(--espresso); }
+.plan-group.is-enhanced:not(.is-comparing) .plan { padding:36px; border:0; min-height:0; height:100%; }
+.plan__photo { width:100%; aspect-ratio:4/5; object-fit:cover; margin:0 0 20px; }
+.plan-group.is-enhanced:not(.is-comparing) .plan__photo { display:none; }
+.plan .eyebrow { font-size:11px; margin:0 0 12px; color:var(--stone); }
+.plan h3 { font:400 34px/1.12 var(--font-display); margin:0 0 20px; }
+.plan__period { font:400 20px/1.3 var(--font-display); white-space:nowrap; }
+.plan__amount { display:flex; flex-wrap:wrap; gap:8px; align-items:baseline; font:400 52px/1.08 var(--font-display); white-space:normal; }
+.plan__amount > span,.plan__amount .vat-label { font:400 13px/1.4 var(--font-sans); margin:0; color:var(--stone); white-space:nowrap; }
+.plan__unit { margin-top:8px; font-size:14px; color:var(--stone); }
+.plan__rate { margin:24px 0 0; padding-top:20px; border-top:1px solid var(--line); font:400 16px/1.6 var(--font-sans); }
+.plan__rate span { font-size:14px; color:var(--stone); }
+.plan__benefits { display:block; flex:1; margin:16px 0 20px; color:var(--stone); font-size:15px; line-height:1.6; }
+.plan__benefits li { position:relative; padding-left:14px; margin:8px 0; }
+.plan__benefits li::before { content:'·'; position:absolute; left:0; color:var(--gold-ink); }
+.plan__badge { align-self:flex-start; position:static; display:inline-block; padding:5px 9px; margin:0 0 16px; background:var(--gold); color:var(--espresso); font:500 11px/1.3 var(--font-sans); letter-spacing:.03em; text-transform:uppercase; }
+.plan-terms { margin:0 0 20px; border-block:1px solid var(--line); color:var(--stone); font-size:14px; line-height:1.65; }
+.plan-terms summary { padding:14px 0; cursor:pointer; font-size:14px; color:var(--espresso); }
+.plan-terms ul { padding-left:18px; }
+.plan-terms p,.plan-terms a { display:block; margin:12px 0; }
+.plan__action { width:100%; margin-top:auto; min-height:50px; padding:15px 12px; font:500 12px/1.5 var(--font-sans); letter-spacing:.07em; }
+.plans-note { margin-top:20px; color:var(--stone); font-size:13px; line-height:1.6; }
+.plan .plans-note { margin:0 0 20px; }
+.membership-story__grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
+.membership-story figure img { width:100%; aspect-ratio:1; object-fit:cover; }
+.membership-story__card { padding:0; margin:0; background:none; box-shadow:none; }
+.membership-story__card .body { margin:24px 0; }
+.pricing-page .perk-grid { gap:32px; margin-top:32px; }
+.pricing-page .perk-grid h3 { font-size:28px; }
+.pricing-page .perk-grid p { font-size:16px; }
+.pricing-page .details__grid { gap:40px; }
+.plan-faq { border-bottom:1px solid var(--line); }
+.plan-faq summary { padding:20px 24px 20px 0; font-size:16px; line-height:1.5; cursor:pointer; }
+.plan-faq p { font-size:15px; padding-bottom:20px; color:var(--stone); }
+@media(max-width:900px) {
+ .plan-picker { grid-template-columns:1fr; }
+ .compare-plans { justify-self:start; padding-left:0; }
+ .plans-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .pricing-hero__grid { gap:32px; }
+}
+@media(max-width:650px) {
+ .pricing-page main .wrap { width:calc(100% - 32px); }
+ .pricing-page .section { padding:48px 0; }
+ .pricing-hero { padding:156px 0 40px; }
+ .pricing-hero__grid { grid-template-columns:1fr; gap:24px; }
+ .pricing-hero__copy .display { font-size:40px; }
+ .pricing-hero__copy .body { font-size:16px; margin:18px 0; }
+ .pricing-hero__image img { height:240px; object-fit:contain; background:var(--sand); }
+ .pricing-page #plans { scroll-margin-top:132px; }
+ .plan-switch { grid-template-columns:repeat(2,minmax(0,1fr)); margin:24px 0 28px; }
+ .plan-switch a { min-height:62px; padding:10px 6px; font-size:14px; }
+ .plan-group__heading { display:block; margin-bottom:20px; }
+ .plan-group__heading .display { font-size:32px; }
+ .plan-group__heading > p { margin-top:12px; max-width:none; font-size:15px; }
+ .plan-picker { gap:12px; padding:20px 0; margin-bottom:20px; }
+ .visit-options { grid-auto-flow:row; grid-auto-columns:auto; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; overflow:visible; }
+ #packages .visit-options { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ #mini-group .visit-options { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .visit-option { grid-template-rows:18px 28px 18px 38px; padding:8px 4px; gap:3px; }
+ .visit-option > span { font-size:28px; }
+ .visit-option > small { font-size:11px; }
+ .visit-option > b { font-size:12px; }
+ .visit-option .visit-option__badge { font-size:9px; padding:3px 4px; }
+ .compare-plans { min-height:44px; font-size:14px; }
+ .plan-group.is-enhanced:not(.is-comparing) .plan-stage { grid-template-columns:1fr; }
+ .plan-group.is-enhanced:not(.is-comparing) .plan-stage__image { height:240px; aspect-ratio:auto; }
+ .plan-stage__image img { object-fit:contain; }
+ .plan-stage__image figcaption { display:none; }
+ .plan,.plan-group.is-enhanced:not(.is-comparing) .plan { padding:24px; min-height:0; }
+ .plan h3 { font-size:32px; margin-bottom:16px; }
+ .plan__amount { font-size:48px; gap:7px; }
+ .plan__benefits { font-size:15px; }
+ .plans-grid { grid-template-columns:1fr; }
+ .is-comparing .plan__photo { height:220px; aspect-ratio:auto; object-fit:contain; background:var(--sand); }
+ .membership-story__grid { grid-template-columns:1fr; gap:24px; }
+ .membership-story figure img { height:240px; aspect-ratio:auto; object-fit:contain; background:var(--sand); }
+ .pricing-page .perk-grid { grid-template-columns:1fr; gap:24px; }
+ .pricing-page .details__grid { grid-template-columns:1fr; gap:24px; }
+ .pricing-page .booking-status .btn { width:100%; max-width:360px; }
+}
+@media(max-width:360px) { .plan-switch a { font-size:13px; } .visit-option > b { font-size:11px; } .plan__amount { font-size:44px; } }
