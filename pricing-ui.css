@@ -126,3 +126,14 @@
  .pricing-page .booking-status .btn { width:100%; max-width:360px; }
 }
 @media(max-width:360px) { .plan-switch a { font-size:13px; } .visit-option > b { font-size:11px; } .plan__amount { font-size:44px; } }
+
+/* The highest-price plan in every category is always espresso. */
+.plan.plan--premium { background:var(--espresso); color:var(--ivory); border-color:var(--espresso); }
+.plan--premium .eyebrow,.plan--premium .plan__unit,.plan--premium .plan__rate span,.plan--premium .plan__benefits,.plan--premium .plans-note,.plan--premium .plan__amount > span,.plan--premium .plan__amount .vat-label,.plan--premium .plan__period { color:var(--sand-2); }
+.plan--premium .plan__rate,.plan--premium .plan-terms { border-color:var(--line-lt); }
+.plan--premium .plan-terms,.plan--premium .plan-terms summary { color:var(--ivory); }
+.plan--premium .plan__action { background:var(--ivory); color:var(--espresso); border-color:var(--ivory); }
+.plan--premium .plan__benefits li::before { color:var(--gold-lt); }
+.visit-option.visit-option--premium { background:var(--espresso); color:var(--ivory); border-color:var(--espresso); }
+.visit-option[aria-checked="true"] { box-shadow:inset 0 0 0 2px var(--gold); }
+.plan--premium :focus-visible { outline-color:var(--gold-lt); }
