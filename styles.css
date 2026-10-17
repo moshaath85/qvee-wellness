@@ -1,3 +1,4 @@
+@import "./pricing-ui.css";
 
 :root {
   --ivory:    #F4EFE9;
@@ -759,4 +760,4 @@ p { text-wrap:pretty; }
 .journey-cta:not(.section--dark) p { color:var(--stone); }
 
 /* All pricing layout rules live in one stylesheet. */
-@import "./pricing-ui.css";
+
