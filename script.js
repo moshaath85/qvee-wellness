@@ -302,6 +302,9 @@
   const planLinks = $$('.plan-switch a');
   const planGroups = $$('.plan-group');
   const selectionStatus = $('.plan-selection-status');
+  const mobileClassType = $('#mobileClassType');
+  const mobileClassPicker = $('.mobile-class-picker');
+  let mobileOptionMode = null;
   let lastPackageCategory = 'packages';
   let lastMonthlyCategory = 'monthly';
   const selectCategory = (id) => {
@@ -313,6 +316,21 @@
     const types = $('#package-types');
     const monthlyTypes = $('#membership-types');
     if (monthlyTypes) monthlyTypes.hidden = !monthlyMode;
+    if (mobileClassType) {
+      if (mobileOptionMode !== monthlyMode) {
+        mobileClassType.replaceChildren();
+        const nav = monthlyMode ? monthlyTypes : types;
+        if (nav) $$('a', nav).forEach((link) => {
+          const option = document.createElement('option');
+          option.value = link.hash.slice(1);
+          option.textContent = link.textContent.trim().replace(/\s+/g, ' ');
+          mobileClassType.append(option);
+        });
+        mobileOptionMode = monthlyMode;
+      }
+      mobileClassType.value = id;
+      mobileClassType.setAttribute('aria-controls', id);
+    }
     const typeLabel = $('#package-type-label');
     if (types) types.hidden = monthlyMode;
     if (typeLabel) typeLabel.hidden = monthlyMode;
@@ -395,6 +413,14 @@
       history.replaceState(null, '', siblings[next].hash);
       siblings[next].focus();
     }));
+    if (mobileClassType && mobileClassPicker) {
+      mobileClassPicker.hidden = false;
+      document.body.classList.add('has-mobile-picker');
+      mobileClassType.addEventListener('change', () => {
+        selectCategory(mobileClassType.value);
+        history.replaceState(null, '', '#' + mobileClassType.value);
+      });
+    }
     $$('[data-pricing-mode]').forEach((button) => button.addEventListener('click', () => {
       const id = button.dataset.pricingMode === 'monthly' ? lastMonthlyCategory : lastPackageCategory;
       selectCategory(id);

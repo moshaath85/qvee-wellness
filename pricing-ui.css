@@ -85,47 +85,69 @@
  .plans-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
  .pricing-hero__grid { gap:32px; }
 }
+/* Mobile uses one decision at a time and prioritises the offer. */
+.mobile-class-picker { display:none; }
 @media(max-width:650px) {
  .pricing-page main .wrap { width:calc(100% - 32px); }
- .pricing-page .section { padding:48px 0; }
- .pricing-hero { padding:156px 0 40px; }
- .pricing-hero__grid { grid-template-columns:1fr; gap:24px; }
- .pricing-hero__copy .display { font-size:40px; }
- .pricing-hero__copy .body { font-size:16px; margin:18px 0; }
- .pricing-hero__image img { height:240px; object-fit:contain; background:var(--sand); }
- .pricing-page #plans { scroll-margin-top:132px; }
- .plan-switch { grid-template-columns:repeat(2,minmax(0,1fr)); margin:24px 0 28px; }
- .plan-switch a { min-height:62px; padding:10px 6px; font-size:14px; }
- .plan-group__heading { display:block; margin-bottom:20px; }
- .plan-group__heading .display { font-size:32px; }
- .plan-group__heading > p { margin-top:12px; max-width:none; font-size:15px; }
- .plan-picker { gap:12px; padding:20px 0; margin-bottom:20px; }
- .visit-options { grid-auto-flow:row; grid-auto-columns:auto; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; overflow:visible; }
- #packages .visit-options { grid-template-columns:repeat(3,minmax(0,1fr)); }
- #mini-group .visit-options { grid-template-columns:repeat(3,minmax(0,1fr)); }
- .visit-option { grid-template-rows:18px 28px 18px 38px; padding:8px 4px; gap:3px; }
+ .pricing-page .section { padding:40px 0; }
+ .pricing-hero { padding:148px 0 24px; }
+ .pricing-hero__grid { display:block; }
+ .pricing-hero__copy .display { font-size:36px; line-height:1.1; }
+ .pricing-hero__copy .body { font-size:15px; line-height:1.6; margin:14px 0 0; }
+ .pricing-hero__copy .btn,.pricing-hero__image { display:none; }
+ .pricing-page #plans { padding-top:24px; scroll-margin-top:132px; }
+ .pricing-page #plans > .wrap > .section-head { display:none; }
+ .pricing-page .pricing-mode { margin:0 0 20px; }
+ .pricing-page .pricing-mode button { min-height:52px; font-size:14px; padding:10px 6px; }
+ .has-mobile-picker .mobile-class-picker { display:block; margin:0 0 24px; }
+ .mobile-class-picker label { display:block; color:var(--stone); font-size:13px; margin-bottom:8px; }
+ .mobile-class-picker select { display:block; width:100%; min-height:52px; padding:12px; border:1px solid var(--line); border-radius:3px; background:var(--ivory); color:var(--espresso); font:400 16px/1.4 var(--font-sans); }
+ .has-mobile-picker .plan-switch,.has-mobile-picker #package-type-label { display:none; }
+ .plan-switch { grid-template-columns:repeat(2,minmax(0,1fr)); margin:0 0 24px; }
+ .plan-switch a { min-height:54px; padding:10px 6px; font-size:14px; }
+ .plan-group__heading { display:block; margin-bottom:16px; }
+ .plan-group__heading .eyebrow { display:none; }
+ .plan-group__heading .display { font-size:28px; }
+ .plan-group__heading > p { margin-top:10px; max-width:none; font-size:14px; line-height:1.6; }
+ .plan-picker { gap:12px; padding:16px 0; margin-bottom:16px; }
+ .plan-picker__intro .eyebrow { font-size:11px; margin:0; }
+ .plan-picker__intro p { display:none; }
+ .visit-options,#packages .visit-options,#mini-group .visit-options { grid-auto-flow:row; grid-auto-columns:auto; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; overflow:visible; }
+ .visit-option { grid-template-rows:16px 26px 18px 38px; padding:8px 6px; gap:2px; border-radius:4px; }
  .visit-option > span { font-size:28px; }
  .visit-option > small { font-size:11px; }
- .visit-option > b { font-size:12px; }
- .visit-option .visit-option__badge { font-size:9px; padding:3px 4px; }
- .compare-plans { min-height:44px; font-size:14px; }
- .plan-group.is-enhanced:not(.is-comparing) .plan-stage { grid-template-columns:1fr; }
- .plan-group.is-enhanced:not(.is-comparing) .plan-stage__image { height:240px; aspect-ratio:auto; }
+ .visit-option > b { font-size:14px; }
+ .visit-option .vat-label { font-size:11px; }
+ .visit-option .visit-option__badge { font-size:10px; padding:2px 5px; }
+ .compare-plans { min-height:44px; font-size:14px; padding:10px 0; }
+ .plan-group.is-enhanced:not(.is-comparing) .plan-stage { display:flex; flex-direction:column; border-radius:4px; overflow:hidden; }
+ .plan-group.is-enhanced:not(.is-comparing) .plans-grid { order:0; }
+ .plan-group.is-enhanced:not(.is-comparing) .plan-stage__image { order:1; height:200px; aspect-ratio:auto; border-top:1px solid var(--line); }
  .plan-stage__image img { object-fit:contain; }
  .plan-stage__image figcaption { display:none; }
- .plan,.plan-group.is-enhanced:not(.is-comparing) .plan { padding:24px; min-height:0; }
- .plan h3 { font-size:32px; margin-bottom:16px; }
- .plan__amount { font-size:48px; gap:7px; }
- .plan__benefits { font-size:15px; }
- .plans-grid { grid-template-columns:1fr; }
- .is-comparing .plan__photo { height:220px; aspect-ratio:auto; object-fit:contain; background:var(--sand); }
- .membership-story__grid { grid-template-columns:1fr; gap:24px; }
- .membership-story figure img { height:240px; aspect-ratio:auto; object-fit:contain; background:var(--sand); }
+ .plan,.plan-group.is-enhanced:not(.is-comparing) .plan { padding:24px 20px; min-height:0; }
+ .plan .eyebrow { font-size:11px; margin-bottom:10px; }
+ .plan h3 { font-size:30px; margin-bottom:16px; }
+ .plan__period { font-size:19px; }
+ .plan__amount { font-size:46px; gap:7px; }
+ .plan__unit { font-size:13px; }
+ .plan__rate { font-size:16px; margin-top:18px; padding-top:16px; }
+ .plan__benefits { font-size:15px; margin:14px 0 18px; }
+ .plan__badge { margin-bottom:14px; }
+ .plan-terms { margin-bottom:18px; }
+ .plan-terms summary { min-height:48px; padding:14px 0; font-size:15px; }
+ .plan-terms ul { padding-left:16px; }
+ .plan__action { min-height:52px; font-size:12px; letter-spacing:.045em; }
+ .plans-grid { grid-template-columns:1fr; gap:16px; }
+ .is-comparing .plan__photo { height:160px; aspect-ratio:auto; object-fit:contain; background:var(--sand); }
+ .membership-story__grid { grid-template-columns:1fr; gap:20px; }
+ .membership-story figure img { height:200px; aspect-ratio:auto; object-fit:contain; background:var(--sand); }
  .pricing-page .perk-grid { grid-template-columns:1fr; gap:24px; }
- .pricing-page .details__grid { grid-template-columns:1fr; gap:24px; }
+ .pricing-page .details__grid { grid-template-columns:1fr; gap:20px; }
  .pricing-page .booking-status .btn { width:100%; max-width:360px; }
+ .pricing-page .footer .wrap { padding-inline:20px; }
 }
-@media(max-width:360px) { .plan-switch a { font-size:13px; } .visit-option > b { font-size:11px; } .plan__amount { font-size:44px; } }
+@media(max-width:360px) { .visit-option > b { font-size:13px; } .plan__amount { font-size:42px; } }
 
 /* The highest-price plan in every category is always espresso. */
 .plan.plan--premium { background:var(--espresso); color:var(--ivory); border-color:var(--espresso); }
