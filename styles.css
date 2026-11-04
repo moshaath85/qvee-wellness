@@ -761,3 +761,23 @@ p { text-wrap:pretty; }
 
 /* All pricing layout rules live in one stylesheet. */
 
+
+/* Keep enquiry fields readable without focus zoom on phones. */
+@media(max-width:650px) {
+  .field input,.field select,.field textarea { font-size:16px; min-height:48px; }
+}
+
+/* Sculpted brand mark: shallow warm extrusion, with the original artwork intact. */
+.header__logo { perspective:700px; }
+.header__logo .logo {
+  transform:rotateY(-9deg) rotateX(3deg);
+  transform-origin:center;
+  filter:drop-shadow(.5px .5px 0 #bda78c) drop-shadow(.5px .5px 0 #a68b6b) drop-shadow(0 3px 2px rgba(43,33,25,.18));
+  transition:opacity .5s var(--ease),transform .45s var(--ease),filter .45s var(--ease);
+}
+@media(hover:hover) {
+  .header__logo:hover .logo { transform:rotateY(5deg) rotateX(-2deg) translateY(-1px); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .header__logo .logo { transition:opacity .1s; transform:none; }
+}

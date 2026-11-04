@@ -322,3 +322,12 @@ Welcome105،Walk-in140،4×122=488،16×105=1680 AED + VAT. قسم مستقل ب
 ### إعادة ترتيب تجربة الهاتف — 4 نوفمبر 2026
 
 استبدال شبكة أنواع الحصص على الهاتف بقائمة اختيار native بحجم16px لتقليل ازدحام6تبويبات، وتتزامن مع Packages/Monthly والروابط المباشرة وتستعيد آخر اختيار. تبويبات الكمبيوتر تبقى كماهي، ودونJavaScriptتبقىواجهةالتبويباتقابلةللاستخدام. اختصارHero والجملالمكررةعلىالهاتف،أولويةسعرالباقةوزرالاستفسارقبلالصورة،وحجم200pxللصورةمعاحتواءالجسمكاملًا. أهدافلمس52pxللإجراءوالمحدد،شروط48px،وأسعارالخيارات14px،وعرضخيارينفيكلصف. لا تغييرللأسعارأوالشروط.
+
+
+## 2026-11-04 — Mobile completion, studio phone and dimensional logo
+- Cloudflare remains primary hosting and canonical origin, per latest user correction.
+- Pricing mobile QA: all 10 categories at 320/360/390/430 px, 41 comparison cards at 320 px; no horizontal overflow or clipped prices/actions. Native class selector, price before photo, 52 px actions.
+- Enquiry fields now 16 px on phones to avoid focus zoom.
+- Approved studio phone +971 54 779 1797 added as click-to-call in menu, footer, contact and available business schema.
+- Original corner logo retained with shallow warm dimensional extrusion and gentle hover tilt; reduced-motion support.
+- Pricing cards unchanged; Cloudflare build and JS syntax verified.
