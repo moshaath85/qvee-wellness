@@ -303,12 +303,16 @@
   const planGroups = $$('.plan-group');
   const selectionStatus = $('.plan-selection-status');
   let lastPackageCategory = 'packages';
+  let lastMonthlyCategory = 'monthly';
   const selectCategory = (id) => {
     if (!planGroups.some((group) => group.id === id)) return;
     planGroups.forEach((group) => { group.hidden = group.id !== id; });
-    const monthlyMode = id === 'monthly';
+    const monthlyMode = id === 'monthly' || id.startsWith('month-');
+    if (monthlyMode) lastMonthlyCategory = id;
     if (!monthlyMode) lastPackageCategory = id;
-    const types = $('.plan-switch');
+    const types = $('#package-types');
+    const monthlyTypes = $('#membership-types');
+    if (monthlyTypes) monthlyTypes.hidden = !monthlyMode;
     const typeLabel = $('#package-type-label');
     if (types) types.hidden = monthlyMode;
     if (typeLabel) typeLabel.hidden = monthlyMode;
@@ -374,23 +378,25 @@
   if (planLinks.length) {
     const initialPlan = new URLSearchParams(location.search).get('plan') || '';
     const initialCategory = location.hash.slice(1);
-    selectCategory(planGroups.some((group) => group.id === initialCategory) ? initialCategory : initialPlan.startsWith('aerial-') ? 'aerial-yoga' : initialPlan.startsWith('yoga-') ? 'yoga' : initialPlan.startsWith('mat-') ? 'mat-pilates' : initialPlan.startsWith('private-') ? 'private' : initialPlan.startsWith('mini-group-') ? 'mini-group' : initialPlan.startsWith('month-') ? 'monthly' : 'packages');
+    selectCategory(planGroups.some((group) => group.id === initialCategory) ? initialCategory : initialPlan.startsWith('month-mat-') ? 'month-mat' : initialPlan.startsWith('month-yoga-') ? 'month-yoga' : initialPlan.startsWith('month-aerial-') ? 'month-aerial' : initialPlan.startsWith('aerial-') ? 'aerial-yoga' : initialPlan.startsWith('yoga-') ? 'yoga' : initialPlan.startsWith('mat-') ? 'mat-pilates' : initialPlan.startsWith('private-') ? 'private' : initialPlan.startsWith('mini-group-') ? 'mini-group' : initialPlan.startsWith('month-') ? 'monthly' : 'packages');
     planLinks.forEach((link) => link.addEventListener('click', (event) => {
       event.preventDefault();
       selectCategory(link.hash.slice(1));
       history.replaceState(null, '', link.hash);
     }));
-    planLinks.forEach((link, index) => link.addEventListener('keydown', (event) => {
+    planLinks.forEach((link) => link.addEventListener('keydown', (event) => {
       const delta = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
       if (!delta && event.key !== 'Home' && event.key !== 'End') return;
       event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? planLinks.length - 1 : (index + delta + planLinks.length) % planLinks.length;
-      selectCategory(planLinks[next].hash.slice(1));
-      history.replaceState(null, '', planLinks[next].hash);
-      planLinks[next].focus();
+      const siblings = planLinks.filter((item) => item.parentElement === link.parentElement);
+      const index = siblings.indexOf(link);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? siblings.length - 1 : (index + delta + siblings.length) % siblings.length;
+      selectCategory(siblings[next].hash.slice(1));
+      history.replaceState(null, '', siblings[next].hash);
+      siblings[next].focus();
     }));
     $$('[data-pricing-mode]').forEach((button) => button.addEventListener('click', () => {
-      const id = button.dataset.pricingMode === 'monthly' ? 'monthly' : lastPackageCategory;
+      const id = button.dataset.pricingMode === 'monthly' ? lastMonthlyCategory : lastPackageCategory;
       selectCategory(id);
       history.replaceState(null, '', '#' + id);
     }));
@@ -410,7 +416,7 @@
       $('#formNote').textContent = 'Your enquiry is sent to the studio via Netlify Forms. Please do not include medical or payment details. This does not confirm a booking.';
     }
     const key = new URLSearchParams(location.search).get('plan');
-    const planNames = { 'aerial-welcome': 'Aerial Yoga · Welcome Visit · AED 105 + VAT', 'aerial-walk-in': 'Aerial Yoga · Walk-in Class · AED 140 + VAT', 'aerial-4': 'Aerial Yoga · 4 classes · AED 488 + VAT', 'aerial-16': 'Aerial Yoga · 16 classes · AED 1,680 + VAT', 'yoga-1': 'Yoga · 1 class · AED 168 + VAT', 'yoga-4': 'Yoga · 4 classes · AED 620 + VAT', 'yoga-16': 'Yoga · 16 classes · AED 2,288 + VAT', 'yoga-22': 'Yoga · 22 classes · AED 2,926 + VAT', 'mat-1': 'Mat Pilates · 1 class · AED 168 + VAT', 'mat-4': 'Mat Pilates · 4 classes · AED 620 + VAT', 'mat-16': 'Mat Pilates · 16 classes · AED 2,288 + VAT', 'mat-22': 'Mat Pilates · 22 classes · AED 2,926 + VAT', 'private-10': 'Private · 10 classes · AED 3,600 + VAT', 'private-1': 'Private · 1 class · AED 420 + VAT', 'private-4': 'Private · 4 classes · AED 1,640 + VAT', 'private-8': 'Private · 8 classes · AED 3,120 + VAT', 'mini-group-1': 'Mini-group · 1 class · AED 390 + VAT for 2–3 people', 'mini-group-4': 'Mini-group · 4 classes · AED 1,520 + VAT for 2–3 people', 'mini-group-8': 'Mini-group · 8 classes · AED 3,000 + VAT for 2–3 people', solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package', fifty: '50-visit package · 90 days · AED 4,750 + VAT',
+    const planNames = { 'month-mat-1': 'Mat Pilates monthly · 1 classes · AED 151.2 + VAT', 'month-mat-4': 'Mat Pilates monthly · 4 classes · AED 558 + VAT', 'month-mat-16': 'Mat Pilates monthly · 16 classes · AED 2,059.2 + VAT', 'month-mat-22': 'Mat Pilates monthly · 22 classes · AED 2,633.4 + VAT', 'month-yoga-1': 'Yoga monthly · 1 classes · AED 151.2 + VAT', 'month-yoga-4': 'Yoga monthly · 4 classes · AED 558 + VAT', 'month-yoga-16': 'Yoga monthly · 16 classes · AED 2,059.2 + VAT', 'month-yoga-22': 'Yoga monthly · 22 classes · AED 2,633.4 + VAT', 'month-aerial-walk-in': 'Aerial Yoga monthly · 1 classes · AED 126 + VAT', 'month-aerial-4': 'Aerial Yoga monthly · 4 classes · AED 439.2 + VAT', 'month-aerial-16': 'Aerial Yoga monthly · 16 classes · AED 1,512 + VAT', 'aerial-welcome': 'Aerial Yoga · Welcome Visit · AED 105 + VAT', 'aerial-walk-in': 'Aerial Yoga · Walk-in Class · AED 140 + VAT', 'aerial-4': 'Aerial Yoga · 4 classes · AED 488 + VAT', 'aerial-16': 'Aerial Yoga · 16 classes · AED 1,680 + VAT', 'yoga-1': 'Yoga · 1 class · AED 168 + VAT', 'yoga-4': 'Yoga · 4 classes · AED 620 + VAT', 'yoga-16': 'Yoga · 16 classes · AED 2,288 + VAT', 'yoga-22': 'Yoga · 22 classes · AED 2,926 + VAT', 'mat-1': 'Mat Pilates · 1 class · AED 168 + VAT', 'mat-4': 'Mat Pilates · 4 classes · AED 620 + VAT', 'mat-16': 'Mat Pilates · 16 classes · AED 2,288 + VAT', 'mat-22': 'Mat Pilates · 22 classes · AED 2,926 + VAT', 'private-10': 'Private · 10 classes · AED 3,600 + VAT', 'private-1': 'Private · 1 class · AED 420 + VAT', 'private-4': 'Private · 4 classes · AED 1,640 + VAT', 'private-8': 'Private · 8 classes · AED 3,120 + VAT', 'mini-group-1': 'Mini-group · 1 class · AED 390 + VAT for 2–3 people', 'mini-group-4': 'Mini-group · 4 classes · AED 1,520 + VAT for 2–3 people', 'mini-group-8': 'Mini-group · 8 classes · AED 3,000 + VAT for 2–3 people', solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package', fifty: '50-visit package · 90 days · AED 4,750 + VAT',
       'month-four': '4 Visits / Month', 'month-eight': '8 Visits / Month',
       'month-twelve': '12 Visits / Month', 'month-twenty': '20 Visits / Month' };
     if (planNames[key]) {
