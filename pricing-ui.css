@@ -159,3 +159,6 @@
 
 #monthly .visit-option:last-child > small { white-space:normal; text-align:center; }
 @media(max-width:650px) { #monthly .visit-option:last-child { grid-column:1/-1; } }
+
+#month-yoga .visit-option:last-child > small { white-space:normal; text-align:center; }
+@media(max-width:650px) { #month-yoga .visit-option:last-child { grid-column:1/-1; } }
