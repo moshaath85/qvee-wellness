@@ -4,6 +4,7 @@ window.QVEE_BOOKING = {
   // Switch to 'netlify' only after enabling form detection and testing receipt.
   enquiryMode: 'email',
   plans: {
+    'yoga-1': '', 'yoga-4': '', 'yoga-16': '', 'yoga-22': '',
     'mat-1': '', 'mat-4': '', 'mat-16': '', 'mat-22': '',
     'private-1': '', 'private-4': '', 'private-8': '', 'private-10': '',
     'mini-group-1': '', 'mini-group-4': '', 'mini-group-8': '',

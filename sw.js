@@ -8,7 +8,7 @@
      • HTML pages     → network-first, cache fallback, offline page
    ========================================================= */
 
-const VERSION = '96ca83bbe0';
+const VERSION = 'b5e75fd41d';
 const CACHE = `qvee-${VERSION}`;
 const RUNTIME = `qvee-runtime-${VERSION}`;
 
@@ -24,8 +24,8 @@ const PRECACHE = [
   "./studio-policy.html",
   "./thank-you.html",
   "./visit.html",
-  "./assets/built/styles.3NUVJ5ZW.css",
-  "./assets/built/script.OUA4FD6L.js",
+  "./assets/built/styles.RCSX5DS2.css",
+  "./assets/built/script.6CDCEEZF.js",
   "./assets/logo/qvee-logo-light.png",
   "./assets/logo/qvee-logo-dark.png",
   "./assets/img/hero.jpg",
