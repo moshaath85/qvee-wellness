@@ -362,7 +362,7 @@
   if (planLinks.length) {
     const initialPlan = new URLSearchParams(location.search).get('plan') || '';
     const initialCategory = location.hash.slice(1);
-    selectCategory(planGroups.some((group) => group.id === initialCategory) ? initialCategory : initialPlan.startsWith('yoga-') ? 'yoga' : initialPlan.startsWith('mat-') ? 'mat-pilates' : initialPlan.startsWith('private-') ? 'private' : initialPlan.startsWith('mini-group-') ? 'mini-group' : initialPlan.startsWith('month-') ? 'monthly' : 'packages');
+    selectCategory(planGroups.some((group) => group.id === initialCategory) ? initialCategory : initialPlan.startsWith('aerial-') ? 'aerial-yoga' : initialPlan.startsWith('yoga-') ? 'yoga' : initialPlan.startsWith('mat-') ? 'mat-pilates' : initialPlan.startsWith('private-') ? 'private' : initialPlan.startsWith('mini-group-') ? 'mini-group' : initialPlan.startsWith('month-') ? 'monthly' : 'packages');
     planLinks.forEach((link) => link.addEventListener('click', (event) => {
       event.preventDefault();
       selectCategory(link.hash.slice(1));
@@ -393,14 +393,14 @@
       $('#formNote').textContent = 'Your enquiry is sent to the studio via Netlify Forms. Please do not include medical or payment details. This does not confirm a booking.';
     }
     const key = new URLSearchParams(location.search).get('plan');
-    const planNames = { 'yoga-1': 'Yoga · 1 class · AED 168 + VAT', 'yoga-4': 'Yoga · 4 classes · AED 620 + VAT', 'yoga-16': 'Yoga · 16 classes · AED 2,288 + VAT', 'yoga-22': 'Yoga · 22 classes · AED 2,926 + VAT', 'mat-1': 'Mat Pilates · 1 class · AED 168 + VAT', 'mat-4': 'Mat Pilates · 4 classes · AED 620 + VAT', 'mat-16': 'Mat Pilates · 16 classes · AED 2,288 + VAT', 'mat-22': 'Mat Pilates · 22 classes · AED 2,926 + VAT', 'private-10': 'Private · 10 classes · AED 3,600 + VAT', 'private-1': 'Private · 1 class · AED 420 + VAT', 'private-4': 'Private · 4 classes · AED 1,640 + VAT', 'private-8': 'Private · 8 classes · AED 3,120 + VAT', 'mini-group-1': 'Mini-group · 1 class · AED 390 + VAT for 2–3 people', 'mini-group-4': 'Mini-group · 4 classes · AED 1,520 + VAT for 2–3 people', 'mini-group-8': 'Mini-group · 8 classes · AED 3,000 + VAT for 2–3 people', solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package', fifty: '50-visit package · 90 days · AED 4,750 + VAT',
+    const planNames = { 'aerial-welcome': 'Aerial Yoga · Welcome Visit · AED 105 + VAT', 'aerial-walk-in': 'Aerial Yoga · Walk-in Class · AED 140 + VAT', 'aerial-4': 'Aerial Yoga · 4 classes · AED 488 + VAT', 'aerial-16': 'Aerial Yoga · 16 classes · AED 1,680 + VAT', 'yoga-1': 'Yoga · 1 class · AED 168 + VAT', 'yoga-4': 'Yoga · 4 classes · AED 620 + VAT', 'yoga-16': 'Yoga · 16 classes · AED 2,288 + VAT', 'yoga-22': 'Yoga · 22 classes · AED 2,926 + VAT', 'mat-1': 'Mat Pilates · 1 class · AED 168 + VAT', 'mat-4': 'Mat Pilates · 4 classes · AED 620 + VAT', 'mat-16': 'Mat Pilates · 16 classes · AED 2,288 + VAT', 'mat-22': 'Mat Pilates · 22 classes · AED 2,926 + VAT', 'private-10': 'Private · 10 classes · AED 3,600 + VAT', 'private-1': 'Private · 1 class · AED 420 + VAT', 'private-4': 'Private · 4 classes · AED 1,640 + VAT', 'private-8': 'Private · 8 classes · AED 3,120 + VAT', 'mini-group-1': 'Mini-group · 1 class · AED 390 + VAT for 2–3 people', 'mini-group-4': 'Mini-group · 4 classes · AED 1,520 + VAT for 2–3 people', 'mini-group-8': 'Mini-group · 8 classes · AED 3,000 + VAT for 2–3 people', solo: 'Solo Session', three: '3-visit package', five: '5-visit package', ten: '10-visit package', fifty: '50-visit package · 90 days · AED 4,750 + VAT',
       'month-four': '4 Visits / Month', 'month-eight': '8 Visits / Month',
       'month-twelve': '12 Visits / Month', 'month-twenty': '20 Visits / Month' };
     if (planNames[key]) {
       $('#requestedPlan').value = planNames[key];
       $('#selectedPlan').textContent = 'Your selected plan: ' + planNames[key];
       $('#selectedPlan').hidden = false;
-      $('#interest').value = key.startsWith('month-') ? 'Membership' : key.startsWith('yoga-') ? 'Yoga' : key.startsWith('mat-') ? 'Mat Pilates' : key.startsWith('private-') ? 'Private Pilates' : key.startsWith('mini-group-') ? 'Semi-Private Pilates' : 'Class package';
+      $('#interest').value = key.startsWith('month-') ? 'Membership' : key.startsWith('aerial-') ? 'Aerial Yoga' : key.startsWith('yoga-') ? 'Yoga' : key.startsWith('mat-') ? 'Mat Pilates' : key.startsWith('private-') ? 'Private Pilates' : key.startsWith('mini-group-') ? 'Semi-Private Pilates' : 'Class package';
     }
   }
   if (booking) booking.addEventListener('submit', async (event) => {
