@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-11-04T19:25:59.096Z",
+  "generatedAt": "2026-11-04T19:29:17.646Z",
   "assets": {
-    "styles.css": "/assets/built/styles.3UVADDVN.css",
+    "styles.css": "/assets/built/styles.GHA5FDVB.css",
     "script.js": "/assets/built/script.6IOVCBY4.js"
   },
   "sourceMaps": {
-    "styles.css": "/assets/built/styles.3UVADDVN.css.map",
+    "styles.css": "/assets/built/styles.GHA5FDVB.css.map",
     "script.js": "/assets/built/script.6IOVCBY4.js.map"
   },
   "serviceWorker": {
-    "version": "7b3b8fee52",
+    "version": "3fafb21160",
     "count": 18
   },
   "bytes": {
-    "styles": 64446,
+    "styles": 64558,
     "script": 16923,
-    "stylesMap": 130610,
+    "stylesMap": 130821,
     "scriptMap": 47410
   }
 }

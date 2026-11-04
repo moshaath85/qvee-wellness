@@ -331,3 +331,5 @@ Welcome105،Walk-in140،4×122=488،16×105=1680 AED + VAT. قسم مستقل ب
 - Approved studio phone +971 54 779 1797 added as click-to-call in menu, footer, contact and available business schema.
 - Original corner logo retained with shallow warm dimensional extrusion and gentle hover tilt; reduced-motion support.
 - Pricing cards unchanged; Cloudflare build and JS syntax verified.
+
+- Mobile photo correction: removed shallow 200/160 px contain frames. Package, comparison and membership story images now use full available width and natural proportions, without letterboxing, distortion or forced cropping.
