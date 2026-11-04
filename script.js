@@ -302,9 +302,21 @@
   const planLinks = $$('.plan-switch a');
   const planGroups = $$('.plan-group');
   const selectionStatus = $('.plan-selection-status');
+  let lastPackageCategory = 'packages';
   const selectCategory = (id) => {
     if (!planGroups.some((group) => group.id === id)) return;
     planGroups.forEach((group) => { group.hidden = group.id !== id; });
+    const monthlyMode = id === 'monthly';
+    if (!monthlyMode) lastPackageCategory = id;
+    const types = $('.plan-switch');
+    const typeLabel = $('#package-type-label');
+    if (types) types.hidden = monthlyMode;
+    if (typeLabel) typeLabel.hidden = monthlyMode;
+    $$('[data-pricing-mode]').forEach((button) => {
+      const active = (button.dataset.pricingMode === 'monthly') === monthlyMode;
+      button.setAttribute('aria-pressed', String(active));
+      button.classList.toggle('is-active', active);
+    });
     planLinks.forEach((link) => {
       const active = link.hash === '#' + id;
       link.classList.toggle('is-active', active);
@@ -376,6 +388,11 @@
       selectCategory(planLinks[next].hash.slice(1));
       history.replaceState(null, '', planLinks[next].hash);
       planLinks[next].focus();
+    }));
+    $$('[data-pricing-mode]').forEach((button) => button.addEventListener('click', () => {
+      const id = button.dataset.pricingMode === 'monthly' ? 'monthly' : lastPackageCategory;
+      selectCategory(id);
+      history.replaceState(null, '', '#' + id);
     }));
     window.addEventListener('hashchange', () => selectCategory(location.hash.slice(1)));
     // Links below the chooser can reveal the other category before scrolling.
