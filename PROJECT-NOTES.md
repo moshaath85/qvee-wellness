@@ -349,3 +349,5 @@ Welcome105،Walk-in140،4×122=488،16×105=1680 AED + VAT. قسم مستقل ب
 - Barre category added alongside Yoga and Aerial in both packages and monthly memberships, using user-confirmed Yoga pricing, expiry and terms. Same monthly discounts and Unlimited tier (AED 3,080 with Aerial access and one Guest Pass). Independent plan IDs, enquiry labels and Offer schema; Mindbody URLs left blank.
 
 - Barre description added to the packages/monthly category introductions and Classes page with service schema and direct plan link. Original wording informed by barre3 methodology (https://barre3.com/about): low-impact controlled movements and holds; no invented class duration or guaranteed results. Barre added to enquiry interests.
+
+- Corrected live deployment target after user supplied www.qveewellness.com: DNS and dashboard confirmed separate Direct Upload project qvee-studio (older Nov 5 deployment). Prepared entire current source as production bundle, including advanced-mode counter handler, and bound existing D1 database to that project. Canonical origin changed to www; counter accepts the official domain. All future live releases must target qvee-studio explicitly.

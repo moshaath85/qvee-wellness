@@ -20,3 +20,9 @@ Production is live at https://qvee-wellness.pages.dev. Cloudflare Pages is conne
 ## Shared website visits (13 November 2026)
 Pages Functions at `functions/api/visits.js` use the D1 binding `VISITS_DB` (database `qvee-website-visits`). Only the production hostname registers visits; previews may read the total. The database counts recorded visits from zero; at the user’s request the display adds a fixed 1,000 baseline (disclosed in Privacy). A browser-local random session token expires after 30 minutes of inactivity. D1 INSERT OR IGNORE plus an atomic batch increment prevents refreshes/retries from counting twice. GET only reads the total. Expired random identifiers are pruned on later updates. No IP, names or page history are stored. The widget stays hidden if the service is unavailable. API routes bypass the service worker cache.
 Do not delete or recreate this database on deployment; its total persists independently of Git.
+
+
+## Official live domain — verified 13 November 2026
+**Production: https://www.qveewellness.com**, served by the existing **qvee-studio** Pages project (Direct Upload). `www` is a Squarespace DNS CNAME to qvee-studio.pages.dev; the apex redirects to www. **qvee-wellness.pages.dev is a separate Git-connected deployment and is not the official live domain.**
+For every future release to the official domain, run `node cloudflare-live-build.mjs`, then upload the contents of `dist` (or a ZIP of those contents) to qvee-studio / Production. This bundles the same visit counter into advanced-mode `_worker.js`, with `_routes.json` restricting execution to `/api/*`. The qvee-studio production binding `VISITS_DB` points to the existing `qvee-website-visits` database; never reset the database.
+Canonical/social/sitemap URLs now target www.qveewellness.com. Verify the custom domain itself after each deployment, not only the pages.dev URL.

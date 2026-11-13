@@ -21,7 +21,7 @@ export async function onRequest({ request, env }) {
       let token;
       try { token = JSON.parse(body).session; } catch { return reply({ error: 'Invalid request' }, 400); }
       if (typeof token !== 'string' || !/^[a-f0-9-]{36}$/i.test(token)) return reply({ error: 'Invalid session' }, 400);
-      if (url.hostname === 'qvee-wellness.pages.dev' && !/bot|crawler|spider|headless|preview|facebookexternalhit/i.test(request.headers.get('User-Agent') || '')) {
+      if (['www.qveewellness.com', 'qveewellness.com', 'qvee-wellness.pages.dev'].includes(url.hostname) && !/bot|crawler|spider|headless|preview|facebookexternalhit/i.test(request.headers.get('User-Agent') || '')) {
         const now = Math.floor(Date.now() / 1000);
         const result = await env.VISITS_DB.batch([
           env.VISITS_DB.prepare('INSERT OR IGNORE INTO visit_sessions (token,created_at) VALUES (?,?)').bind(token,now),

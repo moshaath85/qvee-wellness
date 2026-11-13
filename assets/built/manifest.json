@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T18:19:01.912Z",
+  "generatedAt": "2026-11-13T18:22:53.922Z",
   "assets": {
     "styles.css": "/assets/built/styles.H3D33SCA.css",
     "script.js": "/assets/built/script.TDQ3EFH7.js"
@@ -9,7 +9,7 @@
     "script.js": "/assets/built/script.TDQ3EFH7.js.map"
   },
   "serviceWorker": {
-    "version": "955c646aa3",
+    "version": "82555dcb51",
     "count": 18
   },
   "bytes": {
