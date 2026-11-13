@@ -353,3 +353,10 @@ Welcome105،Walk-in140،4×122=488،16×105=1680 AED + VAT. قسم مستقل ب
 - Corrected live deployment target after user supplied www.qveewellness.com: DNS and dashboard confirmed separate Direct Upload project qvee-studio (older Nov 5 deployment). Prepared entire current source as production bundle, including advanced-mode counter handler, and bound existing D1 database to that project. Canonical origin changed to www; counter accepts the official domain. All future live releases must target qvee-studio explicitly.
 
 - Official live release completed via qvee-studio Production (49/49 files). Verified all 10 HTML pages at www.qveewellness.com exactly match the release files. Confirmed live counter API returns shared persisted total; mobile Barre chooser/selection, WhatsApp icon loading, 05A address and www canonical verified. Previous pages.dev deployment alone was insufficient; official domain now updated.
+
+
+## 2026-11-13 — Featured offers, Barre formats and exact Maps location
+- Restored a moving home-page featured-plan ribbon linking to nine approved existing QVee plans across categories. Includes pause/play, pause on hover/focus, and reduced-motion static scrolling; competitor prices were not substituted.
+- Barre formats researched from the official reference https://www.barreeffectdxb.com/ (class types: Ankle Weight, Ball, Barre, Cardio, Long Band, Mini Band, Ybell). Original QVee copy and generic names used: Classic, Ball, Cardio, Long Band, Mini Band, Ankle Weights, Strength. Availability remains subject to studio schedule. No copied slogans, staff, testimonials or competitor-specific guarantees.
+- Four original Barre editorial images generated to match QVee’s warm ivory/oak/espresso palette. User corrections: no shoes; one solo image with socks, two barefoot; full mirrored wall from floor to ceiling in front of practitioners. Replaced Barre’s old empty-studio photos and added home/class format imagery.
+- User-supplied Maps link https://maps.app.goo.gl/9kYkwRiPxfZfnLZXA added to footers and direction buttons/schema; resolved listing QV Wellness Studio, coordinates 25.1784642,55.308778 used for optional embedded map.

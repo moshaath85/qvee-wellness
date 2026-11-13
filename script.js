@@ -37,6 +37,23 @@
     setInterval(() => { if (visible && !document.hidden) showTotal(); }, 60000);
   }
 
+  /* ---------- Featured offers: user-controlled motion ---------- */
+  const ticker = $('.offer-ticker');
+  if (ticker) {
+    const toggle = $('.offer-ticker__toggle', ticker);
+    let paused = reduce;
+    const syncTicker = () => {
+      ticker.classList.toggle('is-paused', paused);
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.textContent = paused ? 'Play offers' : 'Pause offers';
+    };
+    if (toggle) {
+      toggle.hidden = false;
+      syncTicker();
+      toggle.addEventListener('click', () => { paused = !paused; syncTicker(); });
+    }
+  }
+
   /* ---------- Hero entrance ---------- */
   function revealHero() {
     const hero = $('.hero');
