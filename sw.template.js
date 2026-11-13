@@ -137,6 +137,7 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
   if (!/^https?:$/.test(url.protocol)) return;
+  if (url.pathname.startsWith('/api/')) return;
 
   if (request.mode === 'navigate') {
     event.respondWith(handleNavigate(event));

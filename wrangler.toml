@@ -1,0 +1,11 @@
+name = "qvee-wellness"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-11-13"
+
+[vars]
+SITE_URL = "https://qvee-wellness.pages.dev"
+
+[[d1_databases]]
+binding = "VISITS_DB"
+database_name = "qvee-website-visits"
+database_id = "27693259-cc53-4fd8-bcc4-4f906984fa49"

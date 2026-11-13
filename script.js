@@ -8,6 +8,35 @@
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Shared, server-persisted visit total ---------- */
+  const counter = $('[data-visit-counter]');
+  if (counter && navigator.onLine && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    let session;
+    try {
+      const stored = JSON.parse(localStorage.getItem('qvee-visit-session') || 'null');
+      session = stored && stored.expires > Date.now() ? stored.id : crypto.randomUUID();
+      localStorage.setItem('qvee-visit-session', JSON.stringify({ id: session, expires: Date.now() + 30 * 60 * 1000 }));
+    } catch { /* Without storage, read the shared total rather than inflate it. */ }
+    const showTotal = async (register = false) => {
+      try {
+        const response = await fetch('/api/visits', {
+          method: register && session ? 'POST' : 'GET', cache: 'no-store',
+          ...(register && session ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ session }) } : {})
+        });
+        if (!response.ok) return;
+        const data = await response.json();
+        if (!Number.isSafeInteger(data.total) || data.total < 0) return;
+        $('[data-visit-total]', counter).textContent = new Intl.NumberFormat('en-AE').format(data.total);
+        counter.hidden = false;
+      } catch { /* No fabricated total on network failure. */ }
+    };
+    showTotal(true);
+    // Refresh the common total while the footer is visible, without adding visits.
+    let visible = false;
+    if ('IntersectionObserver' in window) new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(counter);
+    setInterval(() => { if (visible && !document.hidden) showTotal(); }, 60000);
+  }
+
   /* ---------- Hero entrance ---------- */
   function revealHero() {
     const hero = $('.hero');

@@ -781,3 +781,8 @@ p { text-wrap:pretty; }
 @media(prefers-reduced-motion:reduce) {
   .header__logo .logo { transition:opacity .1s; transform:none; }
 }
+
+/* Quiet, readable aggregate count in the existing footer. */
+.visit-counter { display:inline-flex; align-items:baseline; gap:12px; color:var(--cream); }
+.visit-counter[hidden] { display:none; }
+.visit-counter strong { font:400 1.15rem/1.2 var(--font-sans); font-variant-numeric:tabular-nums; letter-spacing:.02em; color:var(--gold-lt); }

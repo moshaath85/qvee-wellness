@@ -8,7 +8,7 @@
      • HTML pages     → network-first, cache fallback, offline page
    ========================================================= */
 
-const VERSION = '3fafb21160';
+const VERSION = '448cab4a69';
 const CACHE = `qvee-${VERSION}`;
 const RUNTIME = `qvee-runtime-${VERSION}`;
 
@@ -24,8 +24,8 @@ const PRECACHE = [
   "./studio-policy.html",
   "./thank-you.html",
   "./visit.html",
-  "./assets/built/styles.GHA5FDVB.css",
-  "./assets/built/script.6IOVCBY4.js",
+  "./assets/built/styles.2NJW6RLZ.css",
+  "./assets/built/script.EFHGHTMG.js",
   "./assets/logo/qvee-logo-light.png",
   "./assets/logo/qvee-logo-dark.png",
   "./assets/img/hero.jpg",
@@ -156,6 +156,7 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
   if (!/^https?:$/.test(url.protocol)) return;
+  if (url.pathname.startsWith('/api/')) return;
 
   if (request.mode === 'navigate') {
     event.respondWith(handleNavigate(event));
