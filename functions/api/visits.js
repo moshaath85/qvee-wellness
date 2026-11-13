@@ -32,6 +32,6 @@ export async function onRequest({ request, env }) {
       }
     }
     const row = await env.VISITS_DB.prepare('SELECT total FROM visit_totals WHERE id=1').first();
-    return reply({ total: row.total, counted });
+    return reply({ total: 1000 + row.total, counted });
   } catch { return reply({ error: 'Counter unavailable' }, 503); }
 }

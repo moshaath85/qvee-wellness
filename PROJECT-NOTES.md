@@ -341,3 +341,5 @@ Welcome105،Walk-in140،4×122=488،16×105=1680 AED + VAT. قسم مستقل ب
 - Added public footer website-visit total backed by Cloudflare D1 (qvee-website-visits), same-origin Pages Function and 30-minute browser-local session identifier. No invented initial count, no IP/name/page history. Sales counters remain pending real Mindbody integration.
 - Counter widget hides on network failure; API bypasses service worker cache; preview hosts do not register visits. Privacy text describes the counter and correct hosting provider.
 - Tested SQL batch increment, repeat-session deduplication, GET, invalid-origin/session and bot handling against real SQLite locally.
+
+- User requested a fixed 1,000 starting baseline. API now displays 1,000 + persisted real visits; the real database count is preserved. Privacy text discloses the baseline.
