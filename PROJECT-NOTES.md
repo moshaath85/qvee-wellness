@@ -345,3 +345,5 @@ Welcome105،Walk-in140،4×122=488،16×105=1680 AED + VAT. قسم مستقل ب
 - User requested a fixed 1,000 starting baseline. API now displays 1,000 + persisted real visits; the real database count is preserved. Privacy text discloses the baseline.
 
 - Added floating bottom-right WhatsApp link across pages, wa.me/971547791797. Standard WhatsApp glyph from Simple Icons recoloured ivory per user request, espresso/gold button, safe-area spacing, keyboard label/focus, reduced-motion support, hidden behind menu/loading. No chat messages sent during verification.
+
+- Barre category added alongside Yoga and Aerial in both packages and monthly memberships, using user-confirmed Yoga pricing, expiry and terms. Same monthly discounts and Unlimited tier (AED 3,080 with Aerial access and one Guest Pass). Independent plan IDs, enquiry labels and Offer schema; Mindbody URLs left blank.

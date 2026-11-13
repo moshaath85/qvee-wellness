@@ -4,6 +4,8 @@ window.QVEE_BOOKING = {
   // Switch to 'netlify' only after enabling form detection and testing receipt.
   enquiryMode: 'email',
   plans: {
+    'barre-1': '', 'barre-4': '', 'barre-16': '', 'barre-22': '',
+    'month-barre-1': '', 'month-barre-4': '', 'month-barre-16': '', 'month-barre-22': '', 'month-barre-unlimited': '',
     'month-yoga-unlimited': '',
     'month-unlimited': '',
     'month-mat-1': '', 'month-mat-4': '', 'month-mat-16': '', 'month-mat-22': '', 'month-yoga-1': '', 'month-yoga-4': '', 'month-yoga-16': '', 'month-yoga-22': '', 'month-aerial-walk-in': '', 'month-aerial-4': '', 'month-aerial-16': '',
