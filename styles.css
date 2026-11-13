@@ -325,7 +325,7 @@ body.lightbox-open { overflow: hidden; }
 .footer__form input:focus { outline: none; }
 .footer__form button { color: var(--gold-lt); font-size: 1.2rem; padding: 0 4px; transition: transform .4s; }
 .footer__form button:hover { transform: translateX(5px); }
-.footer__bottom { display: flex; flex-wrap: wrap; gap: 12px 30px; justify-content: space-between; align-items: center; padding: 26px 0 34px; border-top: 1px solid rgba(244,239,233,.1); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(244,239,233,.66); }
+.footer__bottom { display: flex; flex-wrap: wrap; gap: 12px 30px; justify-content: space-between; align-items: center; padding: 26px var(--pad) 34px; border-top: 1px solid rgba(244,239,233,.1); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(244,239,233,.66); }
 .footer__bottom a { color: rgba(244,239,233,.66); }
 .footer__top-link { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(244,239,233,.7); transition: color .4s; }
 .footer__top-link:hover { color: var(--gold-lt); }
