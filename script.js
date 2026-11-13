@@ -478,7 +478,7 @@
       $('#requestedPlan').value = planNames[key];
       $('#selectedPlan').textContent = 'Your selected plan: ' + planNames[key];
       $('#selectedPlan').hidden = false;
-      $('#interest').value = key.startsWith('month-') ? 'Membership' : key.startsWith('aerial-') ? 'Aerial Yoga' : key.startsWith('yoga-') ? 'Yoga' : key.startsWith('mat-') ? 'Mat Pilates' : key.startsWith('private-') ? 'Private Pilates' : key.startsWith('mini-group-') ? 'Semi-Private Pilates' : 'Class package';
+      $('#interest').value = key.startsWith('month-') ? 'Membership' : key.startsWith('aerial-') ? 'Aerial Yoga' : key.startsWith('barre-') ? 'Barre' : key.startsWith('yoga-') ? 'Yoga' : key.startsWith('mat-') ? 'Mat Pilates' : key.startsWith('private-') ? 'Private Pilates' : key.startsWith('mini-group-') ? 'Semi-Private Pilates' : 'Class package';
     }
   }
   if (booking) booking.addEventListener('submit', async (event) => {

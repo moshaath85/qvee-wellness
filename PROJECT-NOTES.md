@@ -347,3 +347,5 @@ Welcome105،Walk-in140،4×122=488،16×105=1680 AED + VAT. قسم مستقل ب
 - Added floating bottom-right WhatsApp link across pages, wa.me/971547791797. Standard WhatsApp glyph from Simple Icons recoloured ivory per user request, espresso/gold button, safe-area spacing, keyboard label/focus, reduced-motion support, hidden behind menu/loading. No chat messages sent during verification.
 
 - Barre category added alongside Yoga and Aerial in both packages and monthly memberships, using user-confirmed Yoga pricing, expiry and terms. Same monthly discounts and Unlimited tier (AED 3,080 with Aerial access and one Guest Pass). Independent plan IDs, enquiry labels and Offer schema; Mindbody URLs left blank.
+
+- Barre description added to the packages/monthly category introductions and Classes page with service schema and direct plan link. Original wording informed by barre3 methodology (https://barre3.com/about): low-impact controlled movements and holds; no invented class duration or guaranteed results. Barre added to enquiry interests.
