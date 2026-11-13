@@ -362,3 +362,5 @@ Welcome105،Walk-in140،4×122=488،16×105=1680 AED + VAT. قسم مستقل ب
 - User-supplied Maps link https://maps.app.goo.gl/9kYkwRiPxfZfnLZXA added to footers and direction buttons/schema; resolved listing QV Wellness Studio, coordinates 25.1784642,55.308778 used for optional embedded map.
 
 - Published complete 53-file release to qvee-studio Production. Verified all 10 official-domain HTML pages and all 4 new Barre JPEGs exactly match release bytes. Live mobile ribbon pause control, nine offer links, Maps target and no horizontal overflow checked; desktop Barre image confirms full mirrored wall. Local 390/1280 layouts and unique IDs/schema/image paths validated.
+
+- User replaced the featured-price ribbon with a services-only Opening Soon ribbon: 9 services, Opening Soon after each group of 3. Removed all ribbon prices and package offers; pricing pages unchanged. Pause/play and reduced-motion behaviour retained.

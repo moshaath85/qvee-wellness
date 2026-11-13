@@ -45,7 +45,7 @@
     const syncTicker = () => {
       ticker.classList.toggle('is-paused', paused);
       toggle.setAttribute('aria-pressed', String(paused));
-      toggle.textContent = paused ? 'Play offers' : 'Pause offers';
+      toggle.textContent = paused ? 'Play updates' : 'Pause updates';
     };
     if (toggle) {
       toggle.hidden = false;

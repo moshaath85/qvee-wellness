@@ -847,3 +847,12 @@ body.menu-open .whatsapp-float,.has-brand-intro .whatsapp-float { opacity:0; vis
   .offer-ticker__group[aria-hidden] { display:none; }
   .offer-ticker__toggle { display:none; }
 }
+
+/* Opening announcement: three services, then the launch message. */
+.opening-ticker .offer-ticker__track { animation-duration:80s; }
+.opening-ticker .offer-ticker__group { align-items:center; }
+.opening-ticker__service,.opening-ticker__soon { flex:none; padding:10px 30px; white-space:nowrap; font:400 clamp(25px,3vw,38px)/1.2 var(--font-display); }
+.opening-ticker__service { color:var(--espresso); }
+.opening-ticker__service::after { content:'·'; margin-left:48px; color:var(--gold-ink); }
+.opening-ticker__soon { color:var(--gold-ink); font-style:italic; border-inline:1px solid var(--line); margin-inline:12px; }
+@media(max-width:650px) { .opening-ticker__service,.opening-ticker__soon { padding:8px 20px; } .opening-ticker__service::after { margin-left:32px; } }
